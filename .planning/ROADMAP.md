@@ -87,10 +87,10 @@ Plans:
   3. index.js does not exist in the repo
   4. README.md contains a numbered setup flow: clone → run UI → pick sounds → click Apply → restart Claude Code
   5. Debug log path in play.js points to a claude-peon directory, not ~/.config/opencode/
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 05-01: Rename files, scrub all opencode/openpeon strings, delete index.js, rewrite README
+- [ ] 05-01-PLAN.md — Delete index.js, scrub legacy references, rewrite README and CLAUDE.md for Claude Code hooks
 
 ## Progress
 
