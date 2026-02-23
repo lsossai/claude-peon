@@ -83,38 +83,38 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HOOK-01 | — | Pending |
-| HOOK-02 | — | Pending |
-| HOOK-03 | — | Pending |
-| HOOK-04 | — | Pending |
-| HOOK-05 | — | Pending |
-| HOOK-06 | — | Pending |
-| HOOK-07 | — | Pending |
-| HOOK-08 | — | Pending |
-| HOOK-09 | — | Pending |
-| HOOK-10 | — | Pending |
-| CONF-01 | — | Pending |
-| CONF-02 | — | Pending |
-| CONF-03 | — | Pending |
-| CONF-04 | — | Pending |
-| APLY-01 | — | Pending |
-| APLY-02 | — | Pending |
-| APLY-03 | — | Pending |
-| APLY-04 | — | Pending |
-| APLY-05 | — | Pending |
-| APLY-06 | — | Pending |
-| APLY-07 | — | Pending |
-| BRND-01 | — | Pending |
-| BRND-02 | — | Pending |
-| BRND-03 | — | Pending |
-| BRND-04 | — | Pending |
-| BRND-05 | — | Pending |
+| HOOK-01 | Phase 1 | Pending |
+| HOOK-02 | Phase 1 | Pending |
+| HOOK-03 | Phase 1 | Pending |
+| HOOK-04 | Phase 1 | Pending |
+| HOOK-05 | Phase 1 | Pending |
+| HOOK-06 | Phase 1 | Pending |
+| HOOK-07 | Phase 1 | Pending |
+| HOOK-08 | Phase 1 | Pending |
+| HOOK-09 | Phase 1 | Pending |
+| HOOK-10 | Phase 1 | Pending |
+| CONF-01 | Phase 2 | Pending |
+| CONF-02 | Phase 2 | Pending |
+| CONF-03 | Phase 2 | Pending |
+| CONF-04 | Phase 2 | Pending |
+| APLY-01 | Phase 3 | Pending |
+| APLY-02 | Phase 3 | Pending |
+| APLY-03 | Phase 3 | Pending |
+| APLY-04 | Phase 3 | Pending |
+| APLY-05 | Phase 3 | Pending |
+| APLY-06 | Phase 4 | Pending |
+| APLY-07 | Phase 4 | Pending |
+| BRND-01 | Phase 5 | Pending |
+| BRND-02 | Phase 5 | Pending |
+| BRND-03 | Phase 5 | Pending |
+| BRND-04 | Phase 5 | Pending |
+| BRND-05 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 26 total
-- Mapped to phases: 0
-- Unmapped: 26 ⚠️
+- Mapped to phases: 26
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-23*
-*Last updated: 2026-02-23 after initial definition*
+*Last updated: 2026-02-23 after roadmap creation*
