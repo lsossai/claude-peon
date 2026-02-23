@@ -6,7 +6,7 @@
       "triggers": [
         {
           "type": "event",
-          "event": "openpeon.startup"
+          "event": "SessionStart"
         }
       ],
       "sounds": [
@@ -18,8 +18,7 @@
       "triggers": [
         {
           "type": "event",
-          "event": "message.updated",
-          "role": "user"
+          "event": "UserPromptSubmit"
         }
       ],
       "sounds": [
@@ -34,7 +33,7 @@
       "triggers": [
         {
           "type": "event",
-          "event": "session.idle"
+          "event": "Stop"
         }
       ],
       "sounds": [
@@ -46,11 +45,7 @@
       "triggers": [
         {
           "type": "event",
-          "event": "permission.asked"
-        },
-        {
-          "type": "tool.before",
-          "tool": "question"
+          "event": "Notification"
         }
       ],
       "sounds": [
@@ -106,7 +101,7 @@
       "triggers": [
         {
           "type": "event",
-          "event": "session.created"
+          "event": "SessionStart"
         }
       ],
       "sounds": [
