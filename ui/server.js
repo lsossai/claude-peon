@@ -4,7 +4,7 @@ import { resolve, join, extname } from "path"
 import { homedir } from "os"
 
 const ROOT = resolve(import.meta.dir, "..")
-const CONFIG_PATH = resolve(ROOT, "openpeon.json")
+const CONFIG_PATH = resolve(ROOT, "claude-peon.json")
 const SOUNDS_DIR = resolve(ROOT, "sounds")
 const PRESETS_DIR = resolve(ROOT, "ui", "presets")
 const UI_DIR = resolve(ROOT, "ui")
@@ -18,43 +18,12 @@ if (!existsSync(PRESETS_DIR)) {
 const TRIGGER_TYPES = ["event", "tool.before", "tool.after"]
 
 const EVENT_VALUES = [
-  // Command Events
-  "command.executed",
-  // File Events
-  "file.edited",
-  "file.watcher.updated",
-  // Installation Events
-  "installation.updated",
-  // LSP Events
-  "lsp.client.diagnostics",
-  "lsp.updated",
-  // Message Events
-  "message.part.removed",
-  "message.part.updated",
-  "message.removed",
-  "message.updated",
-  // Permission Events
-  "permission.asked",
-  "permission.replied",
-  // Server Events
-  "server.connected",
-  // Session Events
-  "session.created",
-  "session.compacted",
-  "session.deleted",
-  "session.diff",
-  "session.error",
-  "session.idle",
-  "session.status",
-  "session.updated",
-  // Todo Events
-  "todo.updated",
-  // TUI Events
-  "tui.prompt.append",
-  "tui.command.execute",
-  "tui.toast.show",
-  // OpenPeon Events
-  "openpeon.startup",
+  "Stop",
+  "PreToolUse",
+  "PostToolUse",
+  "Notification",
+  "SessionStart",
+  "UserPromptSubmit",
 ]
 
 const TOOL_VALUES = [
