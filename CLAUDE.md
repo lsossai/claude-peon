@@ -1,36 +1,42 @@
-# OpenPeon Plugin
+# claude-peon
 
-An OpenCode plugin that plays Warcraft II sounds in response to various events during your coding session.
-
-## Overview
-
-This plugin hooks into OpenCode events and tool executions to play sound effects:
-- **Acknowledge sounds** - Play when you send a message, execute a command, or reply to a permission prompt
-- **Work complete sound** - Plays when the session goes idle (agent finished working)
-- **Permission asked sound** - Plays when a permission prompt appears or the question tool is invoked
+A Claude Code hooks tool that plays Warcraft II sounds in response to hook events during your coding session. Hook scripts read stdin JSON from Claude Code, match events to sound mappings, and spawn afplay.
 
 ## Project Structure
 
 ```
-openpeon/
-  index.js              # Main plugin code
-  openpeon.json         # Config file mapping triggers to sounds
+claude-peon/
+  play.js               # Hook dispatcher — reads Claude Code stdin, plays sounds
+  claude-peon.json      # Config file mapping hook events to sounds
   package.json          # NPM package metadata
   sounds/               # Sound assets
-    *.wav               # Root-level sounds (legacy peon sounds)
+    *.wav               # Root-level sounds
     wc2-horde/          # Full Warcraft II Horde sound library
     wc2-alliance/       # Full Warcraft II Alliance sound library
+    wc3-peasant/        # Warcraft III Peasant sounds
+    sc2/                # StarCraft 2 sounds
+    scbw/               # StarCraft: Brood War sounds
   ui/                   # Config management UI
     server.js           # Bun server for the UI
     index.html          # Web interface
     presets/            # Saved preset configurations
-  AGENTS.md             # This file (not deployed)
+  CLAUDE.md             # This file
   README.md             # User-facing documentation
 ```
 
+## How It Works
+
+`play.js` is registered as a Claude Code hook command. On each hook event:
+
+1. Claude Code passes a JSON payload to stdin describing the event
+2. `play.js` reads all of stdin and parses `hook_event_name` from the JSON
+3. It loads `claude-peon.json` and finds mappings whose triggers match the event
+4. For each matching mapping, it picks a random sound and spawns `afplay` detached
+5. The script always exits 0 and never writes to stdout (Claude Code ignores non-zero exits from async hooks, but keeping it clean avoids noise)
+
 ## Config Format
 
-The `openpeon.json` file defines mappings between triggers and sounds:
+The `claude-peon.json` file defines mappings between hook events and sounds:
 
 ```json
 {
@@ -38,14 +44,12 @@ The `openpeon.json` file defines mappings between triggers and sounds:
   "randomPreset": false,
   "mappings": [
     {
-      "name": "mapping-name",
+      "name": "work-complete",
       "whisper": false,
       "triggers": [
-        { "type": "event", "event": "session.idle" },
-        { "type": "event", "event": "message.updated", "role": "user" },
-        { "type": "tool.before", "tool": "question" }
+        { "type": "event", "event": "Stop" }
       ],
-      "sounds": ["sound1.wav", "wc2-horde/category-subcategory-name.wav"]
+      "sounds": ["wc2-horde/peon-work-complete-1.wav", "wc2-horde/peon-work-complete-2.wav"]
     }
   ]
 }
@@ -55,101 +59,47 @@ The `openpeon.json` file defines mappings between triggers and sounds:
 
 - `volume` (number, 1-10) - Default playback volume. Defaults to 5 if omitted.
 - Converted to afplay volume using an exponential curve for perceptually linear loudness.
-- Can be changed at runtime via the `peon_set_volume` tool or the config UI.
 
 ### Random Preset
 
-- `randomPreset` (boolean) - When `true`, a random preset is loaded at startup before the `openpeon.startup` event fires. Defaults to `false`.
-- The preset's mappings and volume override the base config for the session.
-- Can be toggled via the config UI.
+- `randomPreset` (boolean) - When `true`, a random preset is loaded at startup. Defaults to `false`.
 
-### Trigger Types
+### Whisper
 
-- `event` - OpenCode events with optional filters (e.g., `role: user` for `message.updated`)
-- `tool.before` - Fires before a tool executes, filtered by tool name
-- `tool.after` - Fires after a tool executes, filtered by tool name
+- Per-mapping `whisper` (boolean) - When `true`, the mapping plays at volume 1 regardless of the global setting. Useful for frequent triggers like tool events.
 
-### Available Events
+## Hook Events
 
-- `session.idle` - Agent finished working
-- `message.updated` - Message created/updated (filter by `role: user` for user messages)
-- `tui.command.execute` - TUI command executed
-- `command.executed` - CLI command executed
-- `permission.asked` - Permission prompt shown
-- `permission.replied` - User replied to permission prompt
-- `openpeon.startup` - Synthetic event fired when the plugin loads (app startup)
+| Event | Description |
+|-------|-------------|
+| `Stop` | Agent finished working (turn complete) |
+| `PreToolUse` | Fires before any tool executes |
+| `PostToolUse` | Fires after any tool executes |
+| `Notification` | Claude Code sends a notification (permission prompts, etc.) |
+| `SessionStart` | Session started |
+| `UserPromptSubmit` | User submits a message |
 
-### Available Tools (for tool.before/tool.after)
+## Setup
 
-- `question`, `bash`, `read`, `write`, `edit`, `glob`, `grep`, `task`, `webfetch`, `todowrite`, `todoread`, `skill`
+1. Run the config UI: `bun run ui`
+2. Open http://localhost:3456 — configure mappings and sounds
+3. Click **Apply** (choose Global or Project scope)
+4. Restart Claude Code
 
-## Deployment
-
-Deploy to global OpenCode plugins directory:
-
-```bash
-# Copy plugin code
-cp index.js ~/.config/opencode/plugins/openpeon/index.js
-
-# Copy config
-cp openpeon.json ~/.config/opencode/plugins/openpeon/openpeon.json
-
-# Copy sounds (replace existing)
-rm -rf ~/.config/opencode/plugins/openpeon/sounds
-cp -R sounds ~/.config/opencode/plugins/openpeon/sounds
-```
-
-Create the loader file at `~/.config/opencode/plugins/openpeon.js`:
-
-```javascript
-export { OpenPeonPlugin } from "./openpeon/index.js"
-```
-
-Restart OpenCode after deployment.
-
-## Config UI
-
-Run the config management UI:
-
-```bash
-bun run ui/server.js
-```
-
-Open http://localhost:3456 to:
-- Adjust default volume
-- Add/remove/edit mappings
-- Browse and preview sounds
-- Save/load presets
-- Export config to `openpeon.json`
+The UI writes hook entries into `~/.claude/settings.json` (global) or `.claude/settings.json` (project), pointing each event at `play.js`.
 
 ## Debug Mode
 
-Enable debug logging:
+Set `CLAUDE_PEON_DEBUG=1` before launching Claude Code:
 
 ```bash
-OPENPEON_DEBUG=1 opencode
+CLAUDE_PEON_DEBUG=1 claude
 ```
 
-Logs are written to `~/.config/opencode/openpeon-debug.log`.
-
-## Custom Tools
-
-The plugin provides custom tools that can be called from within OpenCode:
-
-- `peon_list_presets` - List available sound presets
-- `peon_switch_preset` - Switch to a different preset (takes `preset` argument)
-- `peon_current_config` - Show current configuration and active mappings
-
-Example usage in chat:
-```
-Switch to the wc2-ogre-mage preset
-```
-
-The agent will use the `peon_switch_preset` tool to change the active sound configuration.
+Logs are written to `~/.claude/claude-peon-debug.log`.
 
 ## Notes
 
-- Audio playback uses `afplay` (macOS only)
+- Audio playback uses `afplay` (macOS only); auto-disables if `afplay` is missing
 - Sounds can overlap (no single-flight guard)
-- Plugin auto-disables on non-macOS or if `afplay` is missing
-- Preset switching is live (no restart required)
+- `play.js` is a single-run script, not a long-running daemon
