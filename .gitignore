@@ -5,3 +5,9 @@ node_modules/
 *.pem
 *.key
 openpeon-debug.log
+
+# Claude Code
+.claude/
+
+# GSD planning
+.planning/
