@@ -29,11 +29,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Apply/Deploy
 
-- [ ] **APLY-01**: Web UI Apply button writes hook entries into `~/.claude/settings.json`
-- [ ] **APLY-02**: Apply uses atomic write (write to tmp, rename) to prevent corruption
-- [ ] **APLY-03**: Apply reads existing settings.json and merges (does not overwrite other hooks)
-- [ ] **APLY-04**: Apply validates written file by reading back and parsing
-- [ ] **APLY-05**: Web UI Remove button cleanly strips claude-peon hooks from settings.json
+- [x] **APLY-01**: Web UI Apply button writes hook entries into `~/.claude/settings.json`
+- [x] **APLY-02**: Apply uses atomic write (write to tmp, rename) to prevent corruption
+- [x] **APLY-03**: Apply reads existing settings.json and merges (does not overwrite other hooks)
+- [x] **APLY-04**: Apply validates written file by reading back and parsing
+- [x] **APLY-05**: Web UI Remove button cleanly strips claude-peon hooks from settings.json
 - [ ] **APLY-06**: Apply shows "Restart Claude Code to activate" confirmation message
 - [ ] **APLY-07**: User can choose global (~/.claude) vs project-scoped (.claude) hook installation
 
@@ -97,11 +97,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONF-02 | Phase 2 | Complete |
 | CONF-03 | Phase 2 | Complete |
 | CONF-04 | Phase 2 | Complete |
-| APLY-01 | Phase 3 | Pending |
-| APLY-02 | Phase 3 | Pending |
-| APLY-03 | Phase 3 | Pending |
-| APLY-04 | Phase 3 | Pending |
-| APLY-05 | Phase 3 | Pending |
+| APLY-01 | Phase 3 | Complete |
+| APLY-02 | Phase 3 | Complete |
+| APLY-03 | Phase 3 | Complete |
+| APLY-04 | Phase 3 | Complete |
+| APLY-05 | Phase 3 | Complete |
 | APLY-06 | Phase 4 | Pending |
 | APLY-07 | Phase 4 | Pending |
 | BRND-01 | Phase 5 | Pending |
