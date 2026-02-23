@@ -5,14 +5,26 @@
     {
       "name": "welcome",
       "triggers": [
-        { "type": "event", "event": "SessionStart" }
+        {
+          "type": "event",
+          "event": "SessionStart"
+        }
       ],
-      "sounds": ["wc3-peasant/peasant-ready-1.wav"]
+      "sounds": [
+        "wc3-peasant/peasant-ready-1.wav"
+      ]
     },
     {
       "name": "acknowledge",
       "triggers": [
-        { "type": "event", "event": "UserPromptSubmit" }
+        {
+          "type": "event",
+          "event": "UserPromptSubmit"
+        },
+        {
+          "type": "event",
+          "event": "session.idle"
+        }
       ],
       "sounds": [
         "wc3-peasant/peasant-acknowledge-2.wav",
@@ -24,14 +36,23 @@
     {
       "name": "work-complete",
       "triggers": [
-        { "type": "event", "event": "Stop" }
+        {
+          "type": "event",
+          "event": "Stop"
+        }
       ],
-      "sounds": ["wc3-peasant/peasant-work-complete-1.mp3"]
+      "sounds": [
+        "wc3-peasant/peasant-work-complete-1.mp3"
+      ]
     },
     {
       "name": "permission-asked",
       "triggers": [
-        { "type": "event", "event": "Notification" }
+        {
+          "type": "event",
+          "event": "Notification",
+          "matcher": "permission_prompt"
+        }
       ],
       "sounds": [
         "wc3-peasant/peasant-selected-1.wav",
@@ -43,15 +64,42 @@
     {
       "name": "working-hard",
       "triggers": [
-        { "type": "tool.before", "tool": "read" },
-        { "type": "tool.before", "tool": "write" },
-        { "type": "tool.before", "tool": "edit" },
-        { "type": "tool.before", "tool": "glob" },
-        { "type": "tool.before", "tool": "grep" },
-        { "type": "tool.before", "tool": "bash" },
-        { "type": "tool.before", "tool": "webfetch" },
-        { "type": "tool.before", "tool": "todowrite" },
-        { "type": "tool.before", "tool": "todoread" }
+        {
+          "type": "tool.before",
+          "tool": "read"
+        },
+        {
+          "type": "tool.before",
+          "tool": "write"
+        },
+        {
+          "type": "tool.before",
+          "tool": "edit"
+        },
+        {
+          "type": "tool.before",
+          "tool": "glob"
+        },
+        {
+          "type": "tool.before",
+          "tool": "grep"
+        },
+        {
+          "type": "tool.before",
+          "tool": "bash"
+        },
+        {
+          "type": "tool.before",
+          "tool": "webfetch"
+        },
+        {
+          "type": "tool.before",
+          "tool": "todowrite"
+        },
+        {
+          "type": "tool.before",
+          "tool": "todoread"
+        }
       ],
       "sounds": [
         "wc2-alliance/buildings-blacksmith.wav",
@@ -63,7 +111,10 @@
     {
       "name": "tool-done",
       "triggers": [
-        { "type": "tool.after", "tool": "bash" }
+        {
+          "type": "tool.after",
+          "tool": "bash"
+        }
       ],
       "sounds": [
         "wc2-alliance/buildings-gold-mine.wav"

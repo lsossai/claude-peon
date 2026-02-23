@@ -39,6 +39,13 @@ const TOOL_VALUES = [
   "skill",
 ]
 
+const NOTIFICATION_TYPES = [
+  "permission_prompt",
+  "idle_prompt",
+  "elicitation_dialog",
+  "auth_success",
+]
+
 const PLAY_JS_PATH = resolve(ROOT, "play.js")
 
 const PEON_EVENTS = [
@@ -256,6 +263,7 @@ function handleApi(req) {
       triggerTypes: TRIGGER_TYPES,
       eventValues: EVENT_VALUES,
       toolValues: TOOL_VALUES,
+      notificationTypes: NOTIFICATION_TYPES,
     })
   }
 
