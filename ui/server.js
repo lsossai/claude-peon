@@ -1,5 +1,5 @@
 import { serve } from "bun"
-import { readFileSync, writeFileSync, readdirSync, existsSync, statSync, mkdirSync, cpSync, rmSync, renameSync } from "fs"
+import { readFileSync, writeFileSync, readdirSync, existsSync, statSync, mkdirSync, rmSync, renameSync } from "fs"
 import { resolve, join, extname, dirname } from "path"
 import { homedir } from "os"
 
@@ -8,8 +8,6 @@ const CONFIG_PATH = resolve(ROOT, "claude-peon.json")
 const SOUNDS_DIR = resolve(ROOT, "sounds")
 const PRESETS_DIR = resolve(ROOT, "ui", "presets")
 const UI_DIR = resolve(ROOT, "ui")
-const DEPLOY_DIR = resolve(homedir(), ".config", "opencode", "plugins", "openpeon")
-const DEPLOY_LOADER = resolve(homedir(), ".config", "opencode", "plugins", "openpeon.js")
 
 if (!existsSync(PRESETS_DIR)) {
   mkdirSync(PRESETS_DIR, { recursive: true })
@@ -248,35 +246,6 @@ function savePreset(name, config) {
   writeFileSync(presetPath, JSON.stringify(config, null, 2))
 }
 
-function deployPlugin() {
-  try {
-    mkdirSync(DEPLOY_DIR, { recursive: true })
-
-    cpSync(resolve(ROOT, "index.js"), resolve(DEPLOY_DIR, "index.js"))
-    cpSync(CONFIG_PATH, resolve(DEPLOY_DIR, "openpeon.json"))
-
-    const deployedSoundsDir = resolve(DEPLOY_DIR, "sounds")
-    if (existsSync(deployedSoundsDir)) {
-      rmSync(deployedSoundsDir, { recursive: true })
-    }
-    cpSync(SOUNDS_DIR, deployedSoundsDir, { recursive: true })
-
-    const deployedPresetsDir = resolve(DEPLOY_DIR, "presets")
-    if (existsSync(deployedPresetsDir)) {
-      rmSync(deployedPresetsDir, { recursive: true })
-    }
-    if (existsSync(PRESETS_DIR)) {
-      cpSync(PRESETS_DIR, deployedPresetsDir, { recursive: true })
-    }
-
-    const loaderContent = 'export { OpenPeonPlugin } from "./openpeon/index.js"\n'
-    writeFileSync(DEPLOY_LOADER, loaderContent)
-
-    return { success: true, path: DEPLOY_DIR }
-  } catch (error) {
-    return { success: false, error: error?.message ?? "Unknown error" }
-  }
-}
 
 function handleApi(req) {
   const url = new URL(req.url)
@@ -356,11 +325,6 @@ function handleApi(req) {
     } catch (error) {
       return Response.json({ success: false, error: error?.message ?? "Unknown error" })
     }
-  }
-
-  if (path === "/api/deploy" && req.method === "POST") {
-    const result = deployPlugin()
-    return Response.json(result)
   }
 
   if (path === "/api/apply" && req.method === "POST") {

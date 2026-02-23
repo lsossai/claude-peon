@@ -1,26 +1,23 @@
 {
-  "name": "openpeon",
+  "name": "claude-peon",
   "version": "1.0.0",
-  "description": "OpenCode plugin that plays Warcraft II peon sounds on user commands and task completion",
-  "main": "index.js",
+  "description": "Plays Warcraft II sounds in response to Claude Code hook events",
+  "main": "play.js",
   "type": "module",
   "scripts": {
     "ui": "bun run ui/server.js"
   },
   "keywords": [
-    "opencode",
-    "opencode-plugin",
+    "claude-code",
     "warcraft",
     "peon",
-    "sounds"
+    "sounds",
+    "hooks"
   ],
   "author": "",
   "license": "MIT",
   "files": [
-    "index.js",
+    "play.js",
     "sounds/"
-  ],
-  "peerDependencies": {
-    "@opencode-ai/plugin": "*"
-  }
+  ]
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OpenPeon Config</title>
+  <title>claude-peon</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -631,14 +631,13 @@
   <div class="app">
     <header class="header">
       <div class="logo">
-        <div class="logo-text">Open<span>Peon</span></div>
+        <div class="logo-text">claude-<span>peon</span></div>
       </div>
       <div class="toolbar">
         <button class="btn-primary" onclick="addMapping()">+ Add Mapping</button>
         <button class="btn-secondary" onclick="saveConfig()">Save Config</button>
         <button class="btn-ghost" onclick="loadConfig()">Reload</button>
         <button class="btn-ghost" onclick="showSavePresetModal()">Save Preset</button>
-        <button class="btn-secondary" onclick="deployPlugin()" style="margin-left: auto;">Deploy Plugin</button>
         <div style="width: 1px; height: 24px; background: var(--border-color); margin: 0 4px;"></div>
         <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:13px;color:var(--text-secondary);">
           <input type="radio" name="scope" value="global" checked onchange="updateScope(this.value)"> Global
@@ -1059,26 +1058,6 @@
       setTimeout(() => {
         toast.classList.remove("show")
       }, 3000)
-    }
-
-    async function deployPlugin() {
-      try {
-        // Save config to disk first so deploy copies the latest state
-        await fetch("/api/config", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(config),
-        })
-        const res = await fetch("/api/deploy", { method: "POST" })
-        const result = await res.json()
-        if (result.success) {
-          showToast("Plugin deployed! Restart OpenCode to apply changes.", "success")
-        } else {
-          showToast(`Deploy failed: ${result.error}`, "error")
-        }
-      } catch (err) {
-        showToast(`Deploy error: ${err.message}`, "error")
-      }
     }
 
     let selectedScope = "global"
