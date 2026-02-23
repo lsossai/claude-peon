@@ -22,10 +22,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Config & Presets
 
-- [ ] **CONF-01**: Config file renamed from `openpeon.json` to `claude-peon.json`
-- [ ] **CONF-02**: Trigger types in default config migrated to Claude Code hook event names
-- [ ] **CONF-03**: All preset files migrated to Claude Code hook event names
-- [ ] **CONF-04**: Volume control preserved with exponential curve (1-10 scale)
+- [x] **CONF-01**: Config file renamed from `openpeon.json` to `claude-peon.json`
+- [x] **CONF-02**: Trigger types in default config migrated to Claude Code hook event names
+- [x] **CONF-03**: All preset files migrated to Claude Code hook event names
+- [x] **CONF-04**: Volume control preserved with exponential curve (1-10 scale)
 
 ### Apply/Deploy
 
@@ -93,10 +93,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HOOK-08 | Phase 1 | Complete |
 | HOOK-09 | Phase 1 | Complete |
 | HOOK-10 | Phase 1 | Complete |
-| CONF-01 | Phase 2 | Pending |
-| CONF-02 | Phase 2 | Pending |
-| CONF-03 | Phase 2 | Pending |
-| CONF-04 | Phase 2 | Pending |
+| CONF-01 | Phase 2 | Complete |
+| CONF-02 | Phase 2 | Complete |
+| CONF-03 | Phase 2 | Complete |
+| CONF-04 | Phase 2 | Complete |
 | APLY-01 | Phase 3 | Pending |
 | APLY-02 | Phase 3 | Pending |
 | APLY-03 | Phase 3 | Pending |

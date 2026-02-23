@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Sounds play reliably in Claude Code sessions with zero manual config file editing — the web UI handles everything including hook installation.
-**Current focus:** Phase 1 — Hook Dispatcher
+**Current focus:** Phase 2 — Config Schema Migration
 
 ## Current Position
 
-**Phase:** 1 of 5 (Hook Dispatcher)
-**Current Plan:** Not started
+**Phase:** 2 of 5 (Config Schema Migration)
+**Current Plan:** 1 of 1 complete
 **Total Plans in Phase:** 1
 **Status:** Milestone complete
 **Last Activity:** 2026-02-23
 
-Progress: [██░░░░░░░░] 20% (1/5 phases; Phase 1 complete)
+Progress: [████░░░░░░] 40% (2/5 phases; Phase 2 complete)
 
 ## Performance Metrics
 
@@ -36,6 +36,7 @@ Progress: [██░░░░░░░░] 20% (1/5 phases; Phase 1 complete)
 
 *Updated after each plan completion*
 | Phase 01-hook-dispatcher P01 | 2min | 2 tasks | 2 files |
+| Phase 02-config-schema-migration P01 | 8min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -50,6 +51,8 @@ Recent decisions affecting current work:
 - [Phase 01-hook-dispatcher]: Phase 1 tool.before/tool.after triggers match ALL PreToolUse/PostToolUse events — per-tool filtering deferred to future phase
 - [Phase 01-hook-dispatcher]: Debug logging uses appendFileSync (sync is fine for single-run scripts)
 - [Phase 01-hook-dispatcher]: DEFAULT_CONFIG fallback has empty mappings array — claude-peon.json is the single source of truth
+- [Phase 02-config-schema-migration]: scbw-scv.json session.created collapsed into SessionStart; tool.before:question removed from all permission-asked mappings in favor of Notification event trigger only
+- [Phase 02-config-schema-migration]: UI EVENT_VALUES trimmed to exactly 6 Claude Code hook names; no legacy OpenCode events remain
 
 ### Pending Todos
 
@@ -64,5 +67,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-23
-Stopped at: Completed 01-01-PLAN.md — play.js and claude-peon.json created
+Stopped at: Completed 02-01-PLAN.md — preset files migrated to Claude Code hook event names, openpeon.json deleted, ui/server.js updated
 Resume file: None

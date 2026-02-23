@@ -13,7 +13,7 @@ Convert claude-peon from the opencode plugin API to Claude Code's hooks system. 
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Hook Dispatcher** - Build play.js — the stateless entry point that reads Claude Code hook stdin and plays sounds (completed 2026-02-23)
-- [ ] **Phase 2: Config Schema Migration** - Rename all trigger types from opencode event names to Claude Code hook event names
+- [x] **Phase 2: Config Schema Migration** - Rename all trigger types from opencode event names to Claude Code hook event names (completed 2026-02-23)
 - [ ] **Phase 3: Apply/Remove Endpoints** - Write the server endpoints that merge and strip claude-peon hooks in ~/.claude/settings.json
 - [ ] **Phase 4: UI Apply Button and UX** - Wire the UI button to the endpoints and surface the restart instruction
 - [ ] **Phase 5: Branding and Cleanup** - Remove all opencode/openpeon references, delete index.js, rewrite README
@@ -101,7 +101,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Hook Dispatcher | 1/1 | Complete   | 2026-02-23 |
-| 2. Config Schema Migration | 0/1 | Not started | - |
+| 2. Config Schema Migration | 1/1 | Complete   | 2026-02-23 |
 | 3. Apply/Remove Endpoints | 0/2 | Not started | - |
 | 4. UI Apply Button and UX | 0/1 | Not started | - |
 | 5. Branding and Cleanup | 0/1 | Not started | - |
