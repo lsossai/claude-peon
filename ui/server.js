@@ -1,6 +1,6 @@
 import { serve } from "bun"
-import { readFileSync, writeFileSync, readdirSync, existsSync, statSync, mkdirSync, cpSync, rmSync } from "fs"
-import { resolve, join, extname } from "path"
+import { readFileSync, writeFileSync, readdirSync, existsSync, statSync, mkdirSync, cpSync, rmSync, renameSync } from "fs"
+import { resolve, join, extname, dirname } from "path"
 import { homedir } from "os"
 
 const ROOT = resolve(import.meta.dir, "..")
@@ -40,6 +40,68 @@ const TOOL_VALUES = [
   "todoread",
   "skill",
 ]
+
+const SETTINGS_PATH = resolve(homedir(), ".claude", "settings.json")
+const PLAY_JS_PATH = resolve(ROOT, "play.js")
+
+const PEON_EVENTS = [
+  "Stop",
+  "PreToolUse",
+  "PostToolUse",
+  "Notification",
+  "SessionStart",
+  "UserPromptSubmit",
+]
+
+function buildPeonGroup() {
+  return {
+    _claude_peon: true,
+    hooks: [
+      {
+        type: "command",
+        command: PLAY_JS_PATH,
+        async: true,
+      },
+    ],
+  }
+}
+
+function applyHooks() {
+  // 1. Ensure ~/.claude/ directory exists
+  mkdirSync(dirname(SETTINGS_PATH), { recursive: true })
+
+  // 2. Read existing settings (throw loudly if corrupt — do not silently overwrite)
+  let settings = {}
+  if (existsSync(SETTINGS_PATH)) {
+    const raw = readFileSync(SETTINGS_PATH, "utf8")
+    settings = JSON.parse(raw) // throws on corrupt JSON — caller returns error response
+  }
+
+  // 3. Ensure hooks key exists as an object
+  if (!settings.hooks || typeof settings.hooks !== "object") {
+    settings.hooks = {}
+  }
+
+  // 4. For each peon event: strip stale peon groups (idempotent), then insert a fresh one
+  for (const event of PEON_EVENTS) {
+    if (!Array.isArray(settings.hooks[event])) {
+      settings.hooks[event] = []
+    }
+    settings.hooks[event] = settings.hooks[event].filter((g) => !g._claude_peon)
+    settings.hooks[event].push(buildPeonGroup())
+  }
+
+  // 5. Atomic write: write to .tmp in the same directory, then rename over target
+  const tmpPath = SETTINGS_PATH + ".tmp"
+  writeFileSync(tmpPath, JSON.stringify(settings, null, 2), "utf8")
+  renameSync(tmpPath, SETTINGS_PATH)
+
+  // 6. Validate: read back and parse to confirm a valid JSON file was written
+  const written = JSON.parse(readFileSync(SETTINGS_PATH, "utf8"))
+  if (!written.hooks) throw new Error("Validation failed: hooks key missing after write")
+
+  return { success: true, restartRequired: true }
+}
 
 function getMimeType(filePath) {
   const ext = extname(filePath).toLowerCase()
@@ -242,6 +304,15 @@ function handleApi(req) {
   if (path === "/api/deploy" && req.method === "POST") {
     const result = deployPlugin()
     return Response.json(result)
+  }
+
+  if (path === "/api/apply" && req.method === "POST") {
+    try {
+      const result = applyHooks()
+      return Response.json(result)
+    } catch (error) {
+      return Response.json({ success: false, error: error?.message ?? "Unknown error" })
+    }
   }
 
   return new Response("Not found", { status: 404 })
