@@ -113,7 +113,7 @@ async function main() {
     process.exit(0)
   }
 
-  log("event-received", { hookEventName })
+  log("event-received", { hookEventName, toolName: event?.tool_name, notificationType: event?.notification_type })
 
   const config = loadConfig(CONFIG_PATH)
   const volume = typeof config.volume === "number" ? config.volume : 5
@@ -129,17 +129,30 @@ async function main() {
       if (!trigger?.type) return false
 
       if (trigger.type === "event") {
-        return trigger.event === hookEventName
+        if (trigger.event !== hookEventName) return false
+        // Optional matcher: for Notification events, filter by notification_type
+        if (trigger.matcher) {
+          return trigger.matcher === event?.notification_type
+        }
+        return true
       }
 
       if (trigger.type === "tool.before") {
-        // Phase 1: all PreToolUse events match any tool.before trigger
-        return hookEventName === "PreToolUse"
+        if (hookEventName !== "PreToolUse") return false
+        // Optional tool filter: case-insensitive comparison
+        if (trigger.tool) {
+          return trigger.tool.toLowerCase() === (event?.tool_name ?? "").toLowerCase()
+        }
+        return true
       }
 
       if (trigger.type === "tool.after") {
-        // Phase 1: all PostToolUse events match any tool.after trigger
-        return hookEventName === "PostToolUse"
+        if (hookEventName !== "PostToolUse") return false
+        // Optional tool filter: case-insensitive comparison
+        if (trigger.tool) {
+          return trigger.tool.toLowerCase() === (event?.tool_name ?? "").toLowerCase()
+        }
+        return true
       }
 
       return false
