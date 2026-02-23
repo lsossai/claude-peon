@@ -72,10 +72,10 @@ Plans:
   1. Clicking Apply in the UI shows a success message including the path written (e.g., ~/.claude/settings.json) and the words "Restart Claude Code to activate"
   2. The UI offers a visible choice between global (~/.claude) and project-scoped (.claude) hook installation before applying
   3. Clicking Remove in the UI shows a success confirmation after hooks are stripped
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 04-01: Add Apply/Remove buttons with scope selector and confirmation copy to ui/index.html
+- [ ] 04-01-PLAN.md — Add Apply/Remove buttons with scope selector, refactor server for scope-aware endpoints, confirmation toast with restart instruction
 
 ### Phase 5: Branding and Cleanup
 **Goal**: The repository contains no references to opencode or openpeon; index.js is deleted; the README explains exactly how to go from clone to working sounds in Claude Code
