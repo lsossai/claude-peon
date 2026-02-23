@@ -639,6 +639,15 @@
         <button class="btn-ghost" onclick="loadConfig()">Reload</button>
         <button class="btn-ghost" onclick="showSavePresetModal()">Save Preset</button>
         <button class="btn-secondary" onclick="deployPlugin()" style="margin-left: auto;">Deploy Plugin</button>
+        <div style="width: 1px; height: 24px; background: var(--border-color); margin: 0 4px;"></div>
+        <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:13px;color:var(--text-secondary);">
+          <input type="radio" name="scope" value="global" checked onchange="updateScope(this.value)"> Global
+        </label>
+        <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:13px;color:var(--text-secondary);">
+          <input type="radio" name="scope" value="project" onchange="updateScope(this.value)"> Project
+        </label>
+        <button class="btn-primary" onclick="applyHooks()">Apply</button>
+        <button class="btn-ghost" onclick="removeHooks()" style="border-color: var(--danger); color: var(--danger);">Remove</button>
       </div>
     </header>
 
@@ -1069,6 +1078,55 @@
         }
       } catch (err) {
         showToast(`Deploy error: ${err.message}`, "error")
+      }
+    }
+
+    let selectedScope = "global"
+
+    function updateScope(value) {
+      selectedScope = value
+    }
+
+    async function applyHooks() {
+      try {
+        // Save config first so apply installs the latest sound mappings
+        await fetch("/api/config", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(config),
+        })
+        const res = await fetch("/api/apply", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ scope: selectedScope }),
+        })
+        const result = await res.json()
+        if (result.success) {
+          showToast(`Hooks written to ${result.displayPath}. Restart Claude Code to activate.`, "success")
+        } else {
+          showToast(`Apply failed: ${result.error}`, "error")
+        }
+      } catch (err) {
+        showToast(`Apply error: ${err.message}`, "error")
+      }
+    }
+
+    async function removeHooks() {
+      if (!confirm("Remove claude-peon hooks from settings.json?")) return
+      try {
+        const res = await fetch("/api/remove", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ scope: selectedScope }),
+        })
+        const result = await res.json()
+        if (result.success) {
+          showToast(`Hooks removed from ${result.displayPath}.`, "success")
+        } else {
+          showToast(`Remove failed: ${result.error}`, "error")
+        }
+      } catch (err) {
+        showToast(`Remove error: ${err.message}`, "error")
       }
     }
 
