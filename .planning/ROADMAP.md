@@ -44,10 +44,10 @@ Plans:
   2. Every preset file in ui/presets/ uses the same Claude Code event name vocabulary
   3. Volume control still persists in config and applies on every play.js invocation
   4. Piping a Stop event to play.js with any preset loaded produces a sound (end-to-end smoke test)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 02-01: Rename openpeon.json to claude-peon.json and migrate trigger keys in default config and all presets
+- [ ] 02-01-PLAN.md — Delete openpeon.json, migrate all preset event names and server.js to Claude Code hook vocabulary
 
 ### Phase 3: Apply/Remove Endpoints
 **Goal**: Calling POST /api/apply writes working hook entries into ~/.claude/settings.json without corrupting the file or clobbering other hooks; calling POST /api/remove strips them cleanly
