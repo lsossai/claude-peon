@@ -39,11 +39,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Branding & Reproducibility
 
-- [ ] **BRND-01**: All internal references renamed from openpeon/opencode to claude-peon/Claude Code
-- [ ] **BRND-02**: `@opencode-ai/plugin` peer dependency removed from package.json
-- [ ] **BRND-03**: `index.js` plugin entry point deleted (replaced by play.js)
-- [ ] **BRND-04**: README rewritten with clone → run UI → pick sounds → Apply → restart flow
-- [ ] **BRND-05**: Debug log path updated from `~/.config/opencode/` to claude-peon equivalent
+- [x] **BRND-01**: All internal references renamed from openpeon/opencode to claude-peon/Claude Code
+- [x] **BRND-02**: `@opencode-ai/plugin` peer dependency removed from package.json
+- [x] **BRND-03**: `index.js` plugin entry point deleted (replaced by play.js)
+- [x] **BRND-04**: README rewritten with clone → run UI → pick sounds → Apply → restart flow
+- [x] **BRND-05**: Debug log path updated from `~/.config/opencode/` to claude-peon equivalent
 
 ## v2 Requirements
 

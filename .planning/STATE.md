@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Sounds play reliably in Claude Code sessions with zero manual config file editing — the web UI handles everything including hook installation.
-**Current focus:** Phase 4 — UI Apply Button and UX
+**Current focus:** Phase 5 — Branding and Cleanup (complete)
 
 ## Current Position
 
-**Phase:** 4 of 5 (UI Apply Button and UX)
-**Current Plan:** 1 of 1 complete
+**Phase:** 5 of 5 (Branding and Cleanup)
+**Current Plan:** 1 of 1 (complete)
 **Total Plans in Phase:** 1
-**Status:** Milestone complete
+**Status:** All phases complete
 **Last Activity:** 2026-02-23
 
-Progress: [████████░░] 80% (4/5 phases; Phase 4 complete)
+Progress: [██████████] 100% (5/5 phases complete)
 
 ## Performance Metrics
 
@@ -39,6 +39,7 @@ Progress: [████████░░] 80% (4/5 phases; Phase 4 complete)
 | Phase 02-config-schema-migration P01 | 8min | 2 tasks | 6 files |
 | Phase 03-apply-remove-endpoints P01 | 2min | 2 tasks | 1 file |
 | Phase 04-ui-apply-button-and-ux P01 | 2min | 2 tasks | 2 files |
+| Phase 05-branding-and-cleanup P01 | 8min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -61,6 +62,9 @@ Recent decisions affecting current work:
 - [Phase 04-ui-apply-button-and-ux]: SETTINGS_PATH module-level constant removed; replaced by getSettingsPath(scope) — stateless helpers support both global and project scope
 - [Phase 04-ui-apply-button-and-ux]: displayPath always returned from server response, never hardcoded client-side
 - [Phase 04-ui-apply-button-and-ux]: applyHooks() in UI saves config before applying, matching deployPlugin() pattern
+- [Phase 05-branding-and-cleanup]: index.js deleted entirely — play.js is now sole entry point in package.json main and docs
+- [Phase 05-branding-and-cleanup]: deployPlugin() and /api/deploy removed — replaced by hooks-based Apply/Remove flow
+- [Phase 05-branding-and-cleanup]: CLAUDE.md now describes hooks architecture only; all OpenCode plugin content removed
 
 ### Pending Todos
 
@@ -74,5 +78,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-23
-Stopped at: Completed 04-01-PLAN.md — Apply/Remove buttons with scope selector added to UI; server.js refactored with getSettingsPath/getDisplayPath helpers and scope-parameterized functions
+Stopped at: Completed 05-01-PLAN.md — Brand migration complete; index.js deleted, deploy code removed, README.md and CLAUDE.md rewritten for Claude Code hooks architecture
 Resume file: None

@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Config Schema Migration** - Rename all trigger types from opencode event names to Claude Code hook event names (completed 2026-02-23)
 - [x] **Phase 3: Apply/Remove Endpoints** - Write the server endpoints that merge and strip claude-peon hooks in ~/.claude/settings.json (completed 2026-02-23)
 - [x] **Phase 4: UI Apply Button and UX** - Wire the UI button to the endpoints and surface the restart instruction (completed 2026-02-23)
-- [ ] **Phase 5: Branding and Cleanup** - Remove all opencode/openpeon references, delete index.js, rewrite README
+- [x] **Phase 5: Branding and Cleanup** - Remove all opencode/openpeon references, delete index.js, rewrite README (completed 2026-02-23)
 
 ## Phase Details
 
@@ -90,7 +90,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 05-01-PLAN.md — Delete index.js, scrub legacy references, rewrite README and CLAUDE.md for Claude Code hooks
+- [x] 05-01-PLAN.md — Delete index.js, scrub legacy references, rewrite README and CLAUDE.md for Claude Code hooks
 
 ## Progress
 
@@ -103,4 +103,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Config Schema Migration | 1/1 | Complete   | 2026-02-23 |
 | 3. Apply/Remove Endpoints | 1/1 | Complete   | 2026-02-23 |
 | 4. UI Apply Button and UX | 1/1 | Complete   | 2026-02-23 |
-| 5. Branding and Cleanup | 0/1 | Not started | - |
+| 5. Branding and Cleanup | 1/1 | Complete | 2026-02-23 |
