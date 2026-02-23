@@ -34,8 +34,8 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **APLY-03**: Apply reads existing settings.json and merges (does not overwrite other hooks)
 - [x] **APLY-04**: Apply validates written file by reading back and parsing
 - [x] **APLY-05**: Web UI Remove button cleanly strips claude-peon hooks from settings.json
-- [ ] **APLY-06**: Apply shows "Restart Claude Code to activate" confirmation message
-- [ ] **APLY-07**: User can choose global (~/.claude) vs project-scoped (.claude) hook installation
+- [x] **APLY-06**: Apply shows "Restart Claude Code to activate" confirmation message
+- [x] **APLY-07**: User can choose global (~/.claude) vs project-scoped (.claude) hook installation
 
 ### Branding & Reproducibility
 
@@ -102,8 +102,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | APLY-03 | Phase 3 | Complete |
 | APLY-04 | Phase 3 | Complete |
 | APLY-05 | Phase 3 | Complete |
-| APLY-06 | Phase 4 | Pending |
-| APLY-07 | Phase 4 | Pending |
+| APLY-06 | Phase 4 | Complete |
+| APLY-07 | Phase 4 | Complete |
 | BRND-01 | Phase 5 | Pending |
 | BRND-02 | Phase 5 | Pending |
 | BRND-03 | Phase 5 | Pending |
