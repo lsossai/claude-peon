@@ -59,11 +59,10 @@ Plans:
   3. After POST /api/remove, all claude-peon hook entries are gone and remaining hooks are intact
   4. If settings.json is missing or has no hooks key, Apply creates the structure correctly without error
   5. A deliberately corrupted .tmp file during apply never overwrites the real settings.json (atomic write guarantee)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 03-01: Write /api/apply endpoint (read-merge-write with atomic write and post-write validation)
-- [ ] 03-02: Write /api/remove endpoint (strip claude-peon entries, preserve all others)
+- [ ] 03-01-PLAN.md — Implement applyHooks()/removeHooks() and POST /api/apply + /api/remove endpoints in server.js
 
 ### Phase 4: UI Apply Button and UX
 **Goal**: A user can click Apply in the web UI, see a confirmation that names the file written and instructs them to restart Claude Code, and optionally choose global vs project-scoped installation
@@ -102,6 +101,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Hook Dispatcher | 1/1 | Complete   | 2026-02-23 |
 | 2. Config Schema Migration | 1/1 | Complete   | 2026-02-23 |
-| 3. Apply/Remove Endpoints | 0/2 | Not started | - |
+| 3. Apply/Remove Endpoints | 0/1 | Not started | - |
 | 4. UI Apply Button and UX | 0/1 | Not started | - |
 | 5. Branding and Cleanup | 0/1 | Not started | - |
