@@ -41,7 +41,6 @@ const TOOL_VALUES = [
   "skill",
 ]
 
-const SETTINGS_PATH = resolve(homedir(), ".claude", "settings.json")
 const PLAY_JS_PATH = resolve(ROOT, "play.js")
 
 const PEON_EVENTS = [
@@ -52,6 +51,18 @@ const PEON_EVENTS = [
   "SessionStart",
   "UserPromptSubmit",
 ]
+
+function getSettingsPath(scope) {
+  if (scope === "project") {
+    return resolve(process.cwd(), ".claude", "settings.json")
+  }
+  return resolve(homedir(), ".claude", "settings.json")
+}
+
+function getDisplayPath(scope) {
+  if (scope === "project") return ".claude/settings.json"
+  return "~/.claude/settings.json"
+}
 
 function buildPeonGroup() {
   return {
@@ -66,14 +77,16 @@ function buildPeonGroup() {
   }
 }
 
-function applyHooks() {
-  // 1. Ensure ~/.claude/ directory exists
-  mkdirSync(dirname(SETTINGS_PATH), { recursive: true })
+function applyHooks(scope = "global") {
+  const settingsPath = getSettingsPath(scope)
+
+  // 1. Ensure directory exists
+  mkdirSync(dirname(settingsPath), { recursive: true })
 
   // 2. Read existing settings (throw loudly if corrupt — do not silently overwrite)
   let settings = {}
-  if (existsSync(SETTINGS_PATH)) {
-    const raw = readFileSync(SETTINGS_PATH, "utf8")
+  if (existsSync(settingsPath)) {
+    const raw = readFileSync(settingsPath, "utf8")
     settings = JSON.parse(raw) // throws on corrupt JSON — caller returns error response
   }
 
@@ -92,29 +105,31 @@ function applyHooks() {
   }
 
   // 5. Atomic write: write to .tmp in the same directory, then rename over target
-  const tmpPath = SETTINGS_PATH + ".tmp"
+  const tmpPath = settingsPath + ".tmp"
   writeFileSync(tmpPath, JSON.stringify(settings, null, 2), "utf8")
-  renameSync(tmpPath, SETTINGS_PATH)
+  renameSync(tmpPath, settingsPath)
 
   // 6. Validate: read back and parse to confirm a valid JSON file was written
-  const written = JSON.parse(readFileSync(SETTINGS_PATH, "utf8"))
+  const written = JSON.parse(readFileSync(settingsPath, "utf8"))
   if (!written.hooks) throw new Error("Validation failed: hooks key missing after write")
 
-  return { success: true, restartRequired: true }
+  return { success: true, restartRequired: true, path: settingsPath, displayPath: getDisplayPath(scope) }
 }
 
-function removeHooks() {
+function removeHooks(scope = "global") {
+  const settingsPath = getSettingsPath(scope)
+
   // Nothing to remove if the file doesn't exist
-  if (!existsSync(SETTINGS_PATH)) {
-    return { success: true }
+  if (!existsSync(settingsPath)) {
+    return { success: true, displayPath: getDisplayPath(scope) }
   }
 
-  const raw = readFileSync(SETTINGS_PATH, "utf8")
+  const raw = readFileSync(settingsPath, "utf8")
   const settings = JSON.parse(raw) // throws on corrupt JSON — caller returns error response
 
   // If there's no hooks key (or it's not an object), nothing to strip
   if (!settings.hooks || typeof settings.hooks !== "object") {
-    return { success: true }
+    return { success: true, displayPath: getDisplayPath(scope) }
   }
 
   // Strip peon groups from every event key in hooks (not just PEON_EVENTS —
@@ -135,14 +150,14 @@ function removeHooks() {
   }
 
   // Atomic write: write to .tmp in the same directory, then rename over target
-  const tmpPath = SETTINGS_PATH + ".tmp"
+  const tmpPath = settingsPath + ".tmp"
   writeFileSync(tmpPath, JSON.stringify(settings, null, 2), "utf8")
-  renameSync(tmpPath, SETTINGS_PATH)
+  renameSync(tmpPath, settingsPath)
 
   // Validate: read back and parse
-  JSON.parse(readFileSync(SETTINGS_PATH, "utf8"))
+  JSON.parse(readFileSync(settingsPath, "utf8"))
 
-  return { success: true }
+  return { success: true, displayPath: getDisplayPath(scope) }
 }
 
 function getMimeType(filePath) {
@@ -349,21 +364,27 @@ function handleApi(req) {
   }
 
   if (path === "/api/apply" && req.method === "POST") {
-    try {
-      const result = applyHooks()
-      return Response.json(result)
-    } catch (error) {
-      return Response.json({ success: false, error: error?.message ?? "Unknown error" })
-    }
+    return req.json().then((body) => {
+      const scope = body?.scope === "project" ? "project" : "global"
+      try {
+        const result = applyHooks(scope)
+        return Response.json(result)
+      } catch (error) {
+        return Response.json({ success: false, error: error?.message ?? "Unknown error" })
+      }
+    })
   }
 
   if (path === "/api/remove" && req.method === "POST") {
-    try {
-      const result = removeHooks()
-      return Response.json(result)
-    } catch (error) {
-      return Response.json({ success: false, error: error?.message ?? "Unknown error" })
-    }
+    return req.json().then((body) => {
+      const scope = body?.scope === "project" ? "project" : "global"
+      try {
+        const result = removeHooks(scope)
+        return Response.json(result)
+      } catch (error) {
+        return Response.json({ success: false, error: error?.message ?? "Unknown error" })
+      }
+    })
   }
 
   return new Response("Not found", { status: 404 })
