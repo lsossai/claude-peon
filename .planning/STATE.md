@@ -9,13 +9,13 @@ See: .planning/PROJECT.md (updated 2026-02-24)
 
 ## Current Position
 
-Phase: 13 (Server Foundation) — complete
+Phase: 14 (Trigger Descriptions and Mapping Editor Polish) — complete
 Plan: 01 of 01 complete
-Status: Phase 13 complete, ready for Phase 14
-Last activity: 2026-02-24 — MP3 MIME fix and eventDescriptions/toolDescriptions added to /api/meta
+Status: Phase 14 complete, ready for Phase 15
+Last activity: 2026-02-24 — CSS tooltip on trigger selects, inline description line, whisper save fix
 
 ```
-Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅✅][v1.3 ✅✅░░░]
+Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅✅][v1.3 ✅✅✅░░]
           Phase:  1  2  3  4  5   6  7  8   9 10 11  12 13 14 15 16
 ```
 
@@ -45,6 +45,7 @@ Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅✅][v1.3 ✅✅░�
 | Phase 11-peon-cascade P01 | 2min | 2 tasks | 2 files |
 | Phase 12-bundled-presets P01 | 5 | 2 tasks | 9 files |
 | Phase 13-server-foundation P01 | 2 | 2 tasks | 1 files |
+| Phase 14-trigger-descriptions-and-mapping-editor-polish P01 | 5 | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,8 @@ Recent decisions affecting current work:
 - [Phase 12-bundled-presets]: preset-chip--bundled CSS class added for future styling without breaking existing chip styles
 - [Phase 13-server-foundation]: getMimeType() used in play handler instead of hardcoded string — consistent with static file serving pattern
 - [Phase 13-server-foundation]: EVENT_DESCRIPTIONS keys match EVENT_VALUES (PascalCase); TOOL_DESCRIPTIONS keys use dot-notation matching TRIGGER_TYPES values
+- [Phase 14-trigger-descriptions-and-mapping-editor-polish]: CSS-only data-tooltip pattern is mandatory because innerHTML re-render destroys addEventListener listeners — CSS rules re-apply automatically to new DOM nodes
+- [Phase 14-trigger-descriptions-and-mapping-editor-polish]: tool.after branch added to renderTrigger() valueSelect (was missing — only tool.before handled previously)
 
 ### Pending Todos
 
@@ -99,6 +102,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 13-server-foundation/13-01-PLAN.md
+Stopped at: Completed 14-trigger-descriptions-and-mapping-editor-polish/14-01-PLAN.md
 Resume file: None
-Next action: /gsd:plan-phase 14
+Next action: /gsd:plan-phase 15

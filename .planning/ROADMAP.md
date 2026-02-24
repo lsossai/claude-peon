@@ -184,7 +184,7 @@ Plans:
 
 - [x] **Phase 12: Bundled Presets** - Add missing bundled preset JSON files for all sound packs (completed 2026-02-24)
 - [x] **Phase 13: Server Foundation** - MP3 MIME type fix and trigger event descriptions via /api/meta (completed 2026-02-24)
-- [ ] **Phase 14: Trigger Descriptions and Mapping Editor Polish** - Inline trigger descriptions, whisper toggle, cleaner card layout
+- [x] **Phase 14: Trigger Descriptions and Mapping Editor Polish** - Inline trigger descriptions, whisper toggle, cleaner card layout (completed 2026-02-24)
 - [ ] **Phase 15: Inline Sound Playback** - Play buttons on sound rows in mapping cards
 - [ ] **Phase 16: Preset Visual Preview** - Hover preview popover and unsaved-changes guard
 
@@ -273,6 +273,6 @@ Phases execute in numeric order: 1 → 2 → ... → 11 → 12 → 13 → 14 →
 | 11. Peon Cascade | v1.2 | 1/1 | Complete | 2026-02-24 |
 | 12. Bundled Presets | v1.3 | 1/1 | Complete | 2026-02-24 |
 | 13. Server Foundation | v1.3 | 1/1 | Complete | 2026-02-24 |
-| 14. Trigger Descriptions and Mapping Editor Polish | v1.3 | 0/1 | Not started | - |
+| 14. Trigger Descriptions and Mapping Editor Polish | 1/1 | Complete   | 2026-02-24 | - |
 | 15. Inline Sound Playback | v1.3 | 0/1 | Not started | - |
 | 16. Preset Visual Preview | v1.3 | 0/1 | Not started | - |

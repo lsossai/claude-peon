@@ -95,7 +95,7 @@ Requirements for milestone v1.3: Config UX Polish. Each maps to roadmap phases.
 
 ### Triggers
 
-- [ ] **TRIG-01**: User can hover over a trigger dropdown to see a tooltip describing when that event fires in Claude Code
+- [x] **TRIG-01**: User can hover over a trigger dropdown to see a tooltip describing when that event fires in Claude Code
 - [x] **TRIG-02**: Trigger descriptions served via `/api/meta` endpoint for all event types and tool types
 
 ### Presets
@@ -107,8 +107,8 @@ Requirements for milestone v1.3: Config UX Polish. Each maps to roadmap phases.
 ### Editor
 
 - [ ] **EDIT-01**: User can click a play button on any sound row in a mapping card to hear that sound
-- [ ] **EDIT-02**: User can toggle whisper mode on a mapping card via a visible toggle in the header
-- [ ] **EDIT-03**: Mapping card layout is cleaner with better visual hierarchy (trigger section, sound section)
+- [x] **EDIT-02**: User can toggle whisper mode on a mapping card via a visible toggle in the header
+- [x] **EDIT-03**: Mapping card layout is cleaner with better visual hierarchy (trigger section, sound section)
 
 ### Playback
 
@@ -203,9 +203,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PRST-01 | Phase 12 | Complete |
 | TRIG-02 | Phase 13 | Complete |
 | PLAY-05 | Phase 13 | Complete |
-| TRIG-01 | Phase 14 | Pending |
-| EDIT-02 | Phase 14 | Pending |
-| EDIT-03 | Phase 14 | Pending |
+| TRIG-01 | Phase 14 | Complete |
+| EDIT-02 | Phase 14 | Complete |
+| EDIT-03 | Phase 14 | Complete |
 | EDIT-01 | Phase 15 | Pending |
 | PRST-02 | Phase 16 | Pending |
 | PRST-03 | Phase 16 | Pending |
