@@ -165,6 +165,22 @@ function removeHooks() {
   return { success: true, displayPath: GLOBAL_DISPLAY_PATH }
 }
 
+function readGlobalHooks() {
+  if (!existsSync(GLOBAL_SETTINGS_PATH)) {
+    return { hooks: {} }
+  }
+
+  let settings
+  try {
+    const raw = readFileSync(GLOBAL_SETTINGS_PATH, "utf8")
+    settings = JSON.parse(raw)
+  } catch {
+    return { hooks: {}, error: "Could not parse settings.json" }
+  }
+
+  return { hooks: settings.hooks || {} }
+}
+
 function stripProjectPeonHooks() {
   try {
     const projectSettingsPath = resolve(process.cwd(), ".claude", "settings.json")
@@ -308,6 +324,15 @@ function handleApi(req) {
       toolValues: TOOL_VALUES,
       notificationTypes: NOTIFICATION_TYPES,
     })
+  }
+
+  if (path === "/api/hooks" && req.method === "GET") {
+    try {
+      const result = readGlobalHooks()
+      return Response.json(result)
+    } catch (error) {
+      return Response.json({ hooks: {}, error: error?.message ?? "Unknown error" })
+    }
   }
 
   if (path === "/api/config" && req.method === "GET") {
