@@ -28,13 +28,17 @@ Sounds play reliably in Claude Code sessions with zero manual config file editin
 - ✓ Fix sound playback (absolute node path, executable bit) — v1.1
 - ✓ Global-only config (remove project scope, always target ~/.claude/settings.json) — v1.1
 - ✓ UI loads existing hooks from ~/.claude/settings.json on open (peon and external) — v1.1
+- ✓ Delete any hook (peon or external) from the Active Hooks panel — v1.2
+- ✓ Peon cascade: deleting peon mapping removes from both config and settings.json — v1.2
+- ✓ saveConfig() atomic writes (tmp + rename) — v1.2
 
 ### Active
 
-- [ ] Delete any hook (peon or external) from the Active Hooks panel in the UI
-- [ ] Deleting an external hook removes it from ~/.claude/settings.json
-- [ ] Deleting a peon hook removes it from both settings.json and the peon mapping config
-- [ ] Active Hooks panel refreshes after deletion
+- [ ] Trigger tooltips explaining when each event fires in Claude Code
+- [ ] Preset visual preview showing mapped sounds before loading
+- [ ] Bundled presets for all sound packs (WC2 Horde, WC2 Alliance, WC3 Peasant, SC:BW, SC2)
+- [ ] Mapping editor UX improvements (cleaner layout, less clunky add/edit flow)
+- [ ] More prominent sound playback in the config UI
 
 ### Out of Scope
 
@@ -44,24 +48,22 @@ Sounds play reliably in Claude Code sessions with zero manual config file editin
 - CLI installation script — the web UI handles apply/deploy
 - Tool registration (peon_list_presets etc.) — no MCP means no tools; UI manages everything
 
-## Current Milestone: v1.2 Delete Hooks from UI
+## Current Milestone: v1.3 Config UX Polish
 
-**Goal:** Let users delete any hook directly from the Active Hooks panel — both peon-installed and external hooks.
+**Goal:** Make the config UI intuitive — users understand triggers, preview sounds, load presets confidently, and edit mappings without friction.
 
 **Target features:**
-- Delete buttons on every hook in the Active Hooks panel
-- External hook deletion removes from ~/.claude/settings.json
-- Peon hook deletion removes from both settings.json and peon mapping config
-- Panel refreshes after deletion
+- Trigger tooltips/descriptions explaining when each event fires
+- Preset cards with visual preview of mapped sounds
+- Bundled presets for all included sound packs
+- Cleaner mapping editor UX
+- More prominent sound playback throughout the UI
 
 ## Context
 
 The v1.0 conversion from openpeon is complete — hooks, config, UI, branding all done. The codebase is ~170 lines (play.js) + ~395 lines (ui/server.js) + HTML/CSS for the config UI. All sound files included in repo.
 
-Current issues discovered post-v1.0:
-1. play.js has no shebang and isn't executable — Claude Code can't invoke it as a bare path
-2. Project scope selector adds complexity nobody uses — global is the only real use case
-3. Opening the UI shows only peon config, not the actual hooks in ~/.claude/settings.json (e.g., hand-crafted afplay hooks, ruff-format, etc.)
+Post-v1.2 state: All core functionality works — sound playback, config management, hook apply/remove/delete. The UX needs polish: triggers are opaque (users don't know when events fire), presets feel disconnected from the config experience, and the mapping editor has rough edges.
 
 ## Constraints
 
@@ -79,7 +81,7 @@ Current issues discovered post-v1.0:
 | Keep all sound packs | Users want variety; repo size is acceptable | ✓ Good |
 | Rename to claude-peon | Clear branding, matches repo name | ✓ Good |
 | Clone-and-run, no npm package | Simpler distribution for v1; sound files need to be local anyway | ✓ Good |
-| Global-only scope | Project scope adds complexity; global hooks are the real use case | — Pending |
+| Global-only scope | Project scope adds complexity; global hooks are the real use case | ✓ Good |
 
 ---
-*Last updated: 2026-02-24 after milestone v1.2 start*
+*Last updated: 2026-02-24 after milestone v1.3 start*

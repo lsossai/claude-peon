@@ -5,18 +5,18 @@
 See: .planning/PROJECT.md (updated 2026-02-24)
 
 **Core value:** Sounds play reliably in Claude Code sessions with zero manual config file editing — the web UI handles everything including hook installation.
-**Current focus:** Milestone v1.2 — Delete Hooks from UI
+**Current focus:** Milestone v1.3 — Config UX Polish
 
 ## Current Position
 
-Phase: 11 (Peon Cascade)
-Plan: 1/1 Complete
-Status: Complete
-Last activity: 2026-02-24 — Phase 11 complete: deletePeonMapping() server function, DELETE /api/peon-mappings route, peon mapping rows in Active Hooks panel, forked deleteHookGroup() on isPeon, CASC-01 + CASC-02 implemented
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-02-24 — Milestone v1.3 started
 
 ```
-Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅✅]
-          Phase:  1  2  3  4  5   6  7  8   9 10 11
+Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅✅][v1.3 ...]
+          Phase:  1  2  3  4  5   6  7  8   9 10 11  12+
 ```
 
 ## Performance Metrics
