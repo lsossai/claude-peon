@@ -167,7 +167,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 10-01-PLAN.md -- Add delete buttons to Active Hooks panel with confirm dialog, toast, and panel refresh
+- [x] 10-01-PLAN.md -- Add delete buttons to Active Hooks panel with confirm dialog, toast, and panel refresh
 
 ### Phase 11: Peon Cascade
 **Goal**: Deleting a peon hook row removes the corresponding mapping from claude-peon.json, and when the last peon mapping is gone the peon groups in settings.json are auto-stripped
@@ -177,7 +177,10 @@ Plans:
   1. Deleting a peon hook row from the Active Hooks panel removes the corresponding mapping entry from claude-peon.json (the Mappings editor reflects the removal on next load)
   2. When the last peon mapping is deleted, all `_claude_peon: true` hook groups are automatically removed from ~/.claude/settings.json without any additional user action
   3. After the last peon mapping is deleted, the Active Hooks panel shows no peon hook groups
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 11-01-PLAN.md -- Add deletePeonMapping() endpoint and peon mapping rows with cascade delete in UI
 
 ## Progress
 
