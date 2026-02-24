@@ -149,7 +149,10 @@ Plans:
   2. `DELETE /api/hooks` with a valid `{ event, groupIndex }` body removes the targeted hook group from ~/.claude/settings.json and returns `{ success: true }`
   3. `DELETE /api/hooks` with an out-of-bounds groupIndex returns a 400 error and leaves settings.json unchanged
   4. After a successful delete, calling `GET /api/hooks` no longer returns the deleted group
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 09-01-PLAN.md -- Fix saveConfig() atomicity and add DELETE /api/hooks endpoint
 
 ### Phase 10: Delete UI
 **Goal**: Every hook group row in the Active Hooks panel has a working delete button — clicking it confirms, sends the delete request, shows a toast, and refreshes the panel
