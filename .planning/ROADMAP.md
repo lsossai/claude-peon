@@ -152,7 +152,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 09-01-PLAN.md -- Fix saveConfig() atomicity and add DELETE /api/hooks endpoint
+- [x] 09-01-PLAN.md -- Fix saveConfig() atomicity and add DELETE /api/hooks endpoint
 
 ### Phase 10: Delete UI
 **Goal**: Every hook group row in the Active Hooks panel has a working delete button — clicking it confirms, sends the delete request, shows a toast, and refreshes the panel
@@ -164,7 +164,10 @@ Plans:
   3. Clicking a delete button on a peon hook shows a confirmation dialog that additionally notes the sound mapping will be removed
   4. After confirming deletion, the Active Hooks panel refreshes and the deleted row is gone without a full page reload
   5. After confirming deletion, a toast notification appears confirming the hook was deleted
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 10-01-PLAN.md -- Add delete buttons to Active Hooks panel with confirm dialog, toast, and panel refresh
 
 ### Phase 11: Peon Cascade
 **Goal**: Deleting a peon hook row removes the corresponding mapping from claude-peon.json, and when the last peon mapping is gone the peon groups in settings.json are auto-stripped
