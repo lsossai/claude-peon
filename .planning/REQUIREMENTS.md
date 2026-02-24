@@ -200,15 +200,24 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SAFE-01 | Phase 9 | Complete |
 | CASC-01 | Phase 11 | Complete |
 | CASC-02 | Phase 11 | Complete |
+| PRST-01 | Phase 12 | Pending |
+| TRIG-02 | Phase 13 | Pending |
+| PLAY-05 | Phase 13 | Pending |
+| TRIG-01 | Phase 14 | Pending |
+| EDIT-02 | Phase 14 | Pending |
+| EDIT-03 | Phase 14 | Pending |
+| EDIT-01 | Phase 15 | Pending |
+| PRST-02 | Phase 16 | Pending |
+| PRST-03 | Phase 16 | Pending |
 
 **Coverage:**
 - v1.0 requirements: 26 total (all complete)
 - v1.1 requirements: 10 total (all complete)
 - v1.2 requirements: 8 total (all complete)
 - v1.3 requirements: 9 total
-- Mapped to phases: 0 ⚠️
-- Unmapped: 9 ⚠️
+- Mapped to phases: 9 (Phases 12-16) ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-02-23*
-*Last updated: 2026-02-24 after v1.3 requirements definition*
+*Last updated: 2026-02-24 after v1.3 roadmap creation*

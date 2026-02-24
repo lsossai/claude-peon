@@ -9,22 +9,22 @@ See: .planning/PROJECT.md (updated 2026-02-24)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 12 (Bundled Presets) — not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-02-24 — Milestone v1.3 started
+Status: Roadmap created, ready to plan Phase 12
+Last activity: 2026-02-24 — v1.3 roadmap created (Phases 12-16)
 
 ```
-Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅✅][v1.3 ...]
-          Phase:  1  2  3  4  5   6  7  8   9 10 11  12+
+Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅✅][v1.3 ░░░░░]
+          Phase:  1  2  3  4  5   6  7  8   9 10 11  12 13 14 15 16
 ```
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
+- Total plans completed: 11
 - Average duration: ~4 min
-- Total execution time: ~34 min
+- Total execution time: ~44 min
 
 **By Phase (v1.0):**
 
@@ -74,6 +74,13 @@ Recent decisions affecting current work:
 - [Phase 11-peon-cascade]: peon:N hookRowMeta key prefix is disjoint from any real Claude Code event name — no collision with eventName:groupIndex keys
 - [Phase 11-peon-cascade]: CASC-02 removeHooks() wrapped in try/catch — ghost hooks (no trigger match) are silent no-ops; prevents cascade failure from blocking mapping deletion
 - [Phase 11-peon-cascade]: await loadConfig() after peon delete (not renderMappings() directly) — fetches fresh disk state before re-rendering Mappings section
+- [v1.3 roadmap]: Phase 12 (bundled presets) first — pure JSON data, zero code risk, provides real preset data for all subsequent phases to test against
+- [v1.3 roadmap]: Phase 13 (server foundation) second — MP3 MIME fix and /api/meta event descriptions are prerequisites for Phases 14 and 15
+- [v1.3 roadmap]: Phase 14 (trigger descriptions + editor polish) before Phase 16 — establishes innerHTML re-render contract before hover overlays are added
+- [v1.3 roadmap]: Phase 15 (inline playback) before Phase 16 — play buttons on preset chips are part of the preset UX; Phase 16 builds on stable play infrastructure
+- [v1.3 roadmap]: EDIT-01 (play button) isolated in Phase 15; does not share code path with sound browser modal playSound() — uses previewAudio singleton to prevent overlap
+- [v1.3 roadmap]: PRST-03 (unsaved changes guard) co-located with PRST-02 (preset preview) in Phase 16 — both are preset-interaction features; separating them would be artificial
+- [v1.3 roadmap]: Bundled presets use bundled- filename prefix to prevent delete button from rendering on those chips
 
 ### Pending Todos
 
@@ -86,5 +93,6 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 11-peon-cascade-01-PLAN.md
+Stopped at: v1.3 roadmap created (Phases 12-16)
 Resume file: None
+Next action: /gsd:plan-phase 12

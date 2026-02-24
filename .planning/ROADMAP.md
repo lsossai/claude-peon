@@ -4,7 +4,8 @@
 
 - ✅ **v1.0 Convert to Claude Code Hooks** - Phases 1-5 (shipped 2026-02-23)
 - ✅ **v1.1 Polish and Fix** - Phases 6-8 (shipped 2026-02-24)
-- 🚧 **v1.2 Delete Hooks from UI** - Phases 9-11 (in progress)
+- ✅ **v1.2 Delete Hooks from UI** - Phases 9-11 (shipped 2026-02-24)
+- 🚧 **v1.3 Config UX Polish** - Phases 12-16 (in progress)
 
 ## Phases
 
@@ -130,15 +131,8 @@ Plans:
 
 </details>
 
-### 🚧 v1.2 Delete Hooks from UI (Phases 9-11)
-
-**Milestone Goal:** Let users delete any hook directly from the Active Hooks panel — both peon-installed and external hooks — with confirmation, toast feedback, and panel refresh.
-
-- [x] **Phase 9: Delete API** - Server endpoint and saveConfig() atomicity fix (completed 2026-02-24)
-- [x] **Phase 10: Delete UI** - Delete buttons, confirmation dialog, toast, and panel refresh (completed 2026-02-24)
-- [x] **Phase 11: Peon Cascade** - Mapping removal from claude-peon.json and last-mapping auto-strip from settings.json (completed 2026-02-24)
-
-## Phase Details
+<details>
+<summary>✅ v1.2 Delete Hooks from UI (Phases 9-11) - SHIPPED 2026-02-24</summary>
 
 ### Phase 9: Delete API
 **Goal**: The server can delete any hook group from ~/.claude/settings.json via a validated endpoint, and claude-peon.json writes are safe from corruption
@@ -180,12 +174,122 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 11-01-PLAN.md -- Add deletePeonMapping() endpoint and peon mapping rows with cascade delete in UI
+- [x] 11-01-PLAN.md -- Add deletePeonMapping() endpoint and peon mapping rows with cascade delete in UI
+
+</details>
+
+### 🚧 v1.3 Config UX Polish (Phases 12-16)
+
+**Milestone Goal:** Make the config UI intuitive — users understand triggers, preview sounds, load presets confidently, and edit mappings without friction.
+
+- [ ] **Phase 12: Bundled Presets** - Add missing bundled preset JSON files for all sound packs
+- [ ] **Phase 13: Server Foundation** - MP3 MIME type fix and trigger event descriptions via /api/meta
+- [ ] **Phase 14: Trigger Descriptions and Mapping Editor Polish** - Inline trigger descriptions, whisper toggle, cleaner card layout
+- [ ] **Phase 15: Inline Sound Playback** - Play buttons on sound rows in mapping cards
+- [ ] **Phase 16: Preset Visual Preview** - Hover preview popover and unsaved-changes guard
+
+## Phase Details
+
+### Phase 9: Delete API
+**Goal**: The server can delete any hook group from ~/.claude/settings.json via a validated endpoint, and claude-peon.json writes are safe from corruption
+**Depends on**: Phase 8
+**Requirements**: SAFE-01
+**Success Criteria** (what must be TRUE):
+  1. `saveConfig()` in server.js writes to a `.tmp` file and renames atomically — a process kill mid-write leaves claude-peon.json intact
+  2. `DELETE /api/hooks` with a valid `{ event, groupIndex }` body removes the targeted hook group from ~/.claude/settings.json and returns `{ success: true }`
+  3. `DELETE /api/hooks` with an out-of-bounds groupIndex returns a 400 error and leaves settings.json unchanged
+  4. After a successful delete, calling `GET /api/hooks` no longer returns the deleted group
+**Plans**: TBD
+
+Plans:
+- [x] 09-01-PLAN.md -- Fix saveConfig() atomicity and add DELETE /api/hooks endpoint
+
+### Phase 10: Delete UI
+**Goal**: Every hook group row in the Active Hooks panel has a working delete button — clicking it confirms, sends the delete request, shows a toast, and refreshes the panel
+**Depends on**: Phase 9
+**Requirements**: DEL-01, DEL-02, DEL-03, DEL-04, DEL-05
+**Success Criteria** (what must be TRUE):
+  1. Every hook group row in the Active Hooks panel shows a delete button (x or trash icon)
+  2. Clicking a delete button on an external hook shows a confirmation dialog naming the event and command before proceeding
+  3. Clicking a delete button on a peon hook shows a confirmation dialog that additionally notes the sound mapping will be removed
+  4. After confirming deletion, the Active Hooks panel refreshes and the deleted row is gone without a full page reload
+  5. After confirming deletion, a toast notification appears confirming the hook was deleted
+**Plans**: TBD
+
+Plans:
+- [x] 10-01-PLAN.md -- Add delete buttons to Active Hooks panel with confirm dialog, toast, and panel refresh
+
+### Phase 11: Peon Cascade
+**Goal**: Deleting a peon hook row removes the corresponding mapping from claude-peon.json, and when the last peon mapping is gone the peon groups in settings.json are auto-stripped
+**Depends on**: Phase 10
+**Requirements**: CASC-01, CASC-02
+**Success Criteria** (what must be TRUE):
+  1. Deleting a peon hook row from the Active Hooks panel removes the corresponding mapping entry from claude-peon.json (the Mappings editor reflects the removal on next load)
+  2. When the last peon mapping is deleted, all `_claude_peon: true` hook groups are automatically removed from ~/.claude/settings.json without any additional user action
+  3. After the last peon mapping is deleted, the Active Hooks panel shows no peon hook groups
+**Plans**: TBD
+
+Plans:
+- [x] 11-01-PLAN.md -- Add deletePeonMapping() endpoint and peon mapping rows with cascade delete in UI
+
+### Phase 12: Bundled Presets
+**Goal**: Every sound pack in the repo has a bundled preset so users can load any pack without configuring from scratch
+**Depends on**: Phase 11
+**Requirements**: PRST-01
+**Success Criteria** (what must be TRUE):
+  1. The presets panel shows bundled preset chips for WC2 Alliance, SC2 Terran, SC2 Protoss, SC2 Zerg, SC:BW Terran, SC:BW Protoss, SC:BW Zerg, and SC:BW Misc
+  2. Clicking a bundled preset chip loads a complete mapping set that plays sounds exclusively from that sound pack
+  3. Bundled preset chips have no delete (×) button — they cannot be removed from the presets list
+  4. Clicking Load on a bundled preset produces audible sound output when a relevant Claude Code event fires
+**Plans**: TBD
+
+### Phase 13: Server Foundation
+**Goal**: The server correctly serves SC2 MP3 files to the browser and exposes trigger event descriptions so client-side features have a stable data source
+**Depends on**: Phase 12
+**Requirements**: TRIG-02, PLAY-05
+**Success Criteria** (what must be TRUE):
+  1. Clicking the play button on an SC2 sound in the sound browser modal plays the sound without a MIME type error in the browser console
+  2. GET /api/meta returns an `eventDescriptions` object with a description string for each of the six Claude Code hook events (Stop, PreToolUse, PostToolUse, Notification, SessionStart, UserPromptSubmit)
+  3. GET /api/meta also returns descriptions for tool trigger types (tool.before, tool.after)
+**Plans**: TBD
+
+### Phase 14: Trigger Descriptions and Mapping Editor Polish
+**Goal**: Users can see what each trigger event means directly in the mapping card — and the whisper toggle is discoverable without knowing the JSON schema
+**Depends on**: Phase 13
+**Requirements**: TRIG-01, EDIT-02, EDIT-03
+**Success Criteria** (what must be TRUE):
+  1. Each trigger row in a mapping card shows a description line beneath the event selector explaining when that event fires (e.g., "Fires when the agent finishes its turn")
+  2. Hovering over a trigger type selector shows a tooltip with the same event description
+  3. Each mapping card header has a visible whisper toggle — toggling it updates the card label immediately without a page reload
+  4. The mapping card layout has a clear visual separation between the trigger section and the sound list section
+**Plans**: TBD
+
+### Phase 15: Inline Sound Playback
+**Goal**: Users can audition any sound already assigned to a mapping without opening the sound browser modal
+**Depends on**: Phase 13
+**Requirements**: EDIT-01
+**Success Criteria** (what must be TRUE):
+  1. Every sound row in a mapping card shows a play button (triangle icon) to the left of the filename
+  2. Clicking the play button plays that sound file through the browser — no modal opens, no page change occurs
+  3. Playing one sound while another is already playing stops the previous sound (sequential, not overlapping)
+  4. SC2 MP3 sounds play correctly via the mapping card play button (depends on Phase 13 MIME fix)
+**Plans**: TBD
+
+### Phase 16: Preset Visual Preview
+**Goal**: Users can inspect what a preset contains before loading it, and are warned before overwriting unsaved config changes
+**Depends on**: Phase 15
+**Requirements**: PRST-02, PRST-03
+**Success Criteria** (what must be TRUE):
+  1. Hovering over a preset chip shows a popover listing the mapping names, trigger events covered, and sound count per mapping
+  2. The popover appears within the viewport regardless of where the preset chip is positioned on screen
+  3. When the user clicks Load on a preset and there are unsaved config changes, a confirmation dialog warns them the current config will be overwritten
+  4. Dismissing the confirmation dialog cancels the preset load and leaves the current config intact
+**Plans**: TBD
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11
+Phases execute in numeric order: 1 → 2 → ... → 11 → 12 → 13 → 14 → 15 → 16
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -197,6 +301,11 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 6. Fix Sound Playback | v1.1 | 1/1 | Complete | 2026-02-24 |
 | 7. Remove Project Scope | v1.1 | 1/1 | Complete | 2026-02-24 |
 | 8. UI Loads Existing Hooks | v1.1 | 1/1 | Complete | 2026-02-24 |
-| 9. Delete API | 1/1 | Complete   | 2026-02-24 | - |
-| 10. Delete UI | 1/1 | Complete    | 2026-02-24 | - |
-| 11. Peon Cascade | 1/1 | Complete    | 2026-02-24 | - |
+| 9. Delete API | v1.2 | 1/1 | Complete | 2026-02-24 |
+| 10. Delete UI | v1.2 | 1/1 | Complete | 2026-02-24 |
+| 11. Peon Cascade | v1.2 | 1/1 | Complete | 2026-02-24 |
+| 12. Bundled Presets | v1.3 | 0/1 | Not started | - |
+| 13. Server Foundation | v1.3 | 0/1 | Not started | - |
+| 14. Trigger Descriptions and Mapping Editor Polish | v1.3 | 0/1 | Not started | - |
+| 15. Inline Sound Playback | v1.3 | 0/1 | Not started | - |
+| 16. Preset Visual Preview | v1.3 | 0/1 | Not started | - |
