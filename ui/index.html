@@ -1047,12 +1047,15 @@
       if (presets.length === 0) {
         container.innerHTML = '<span style="color: var(--text-muted); font-size: 14px;">No presets saved yet</span>'
       } else {
-        container.innerHTML = presets.map(name => 
-          `<div class="preset-chip">
-            <span onclick="loadPreset('${name}')">${name}</span>
-            <span class="preset-delete" onclick="deletePreset('${name}', event)">&times;</span>
+        container.innerHTML = presets.map(name => {
+          const isBundled = name.startsWith("bundled-")
+          const displayName = isBundled ? name.replace(/^bundled-/, "") : name
+          const deleteBtn = isBundled ? "" : `<span class="preset-delete" onclick="deletePreset('${name}', event)">&times;</span>`
+          return `<div class="preset-chip${isBundled ? " preset-chip--bundled" : ""}">
+            <span onclick="loadPreset('${name}')">${displayName}</span>
+            ${deleteBtn}
           </div>`
-        ).join("")
+        }).join("")
       }
     }
 
