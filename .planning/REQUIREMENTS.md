@@ -89,6 +89,31 @@ Requirements for milestone v1.2: Delete Hooks from UI. Each maps to roadmap phas
 - [x] **CASC-01**: Deleting a peon hook group removes the corresponding mapping from claude-peon.json
 - [x] **CASC-02**: When the last peon mapping is deleted, all peon hook groups are auto-stripped from settings.json
 
+## v1.3 Requirements
+
+Requirements for milestone v1.3: Config UX Polish. Each maps to roadmap phases.
+
+### Triggers
+
+- [ ] **TRIG-01**: User can hover over a trigger dropdown to see a tooltip describing when that event fires in Claude Code
+- [ ] **TRIG-02**: Trigger descriptions served via `/api/meta` endpoint for all event types and tool types
+
+### Presets
+
+- [ ] **PRST-01**: Bundled preset exists for every sound pack in the repo (WC2 Alliance, SC2 Terran/Protoss/Zerg, SC:BW Terran/Protoss/Zerg/Misc)
+- [ ] **PRST-02**: User can hover over a preset chip to see a preview showing mapping names, trigger events, and sound counts
+- [ ] **PRST-03**: User is warned about unsaved changes before loading a preset that would overwrite current config
+
+### Editor
+
+- [ ] **EDIT-01**: User can click a play button on any sound row in a mapping card to hear that sound
+- [ ] **EDIT-02**: User can toggle whisper mode on a mapping card via a visible toggle in the header
+- [ ] **EDIT-03**: Mapping card layout is cleaner with better visual hierarchy (trigger section, sound section)
+
+### Playback
+
+- [ ] **PLAY-05**: MP3 sound files play correctly in the browser (MIME type fix for SC2 sounds)
+
 ## Future Requirements
 
 Deferred to future release. Tracked but not in current roadmap.
@@ -121,6 +146,9 @@ Deferred to future release. Tracked but not in current roadmap.
 | Editing hooks inline | Separate feature; v1.2 is delete-only |
 | Bulk delete (select multiple) | Single delete sufficient for typical 5-10 hook count |
 | Reorder hooks | Not a deletion feature; hook order rarely matters |
+| Drag-and-drop sound reorder | Sound order only matters for random selection; no semantic value |
+| Per-sound volume control | Overcomplicates config; whisper at mapping level is sufficient |
+| Global sound search | Directory-based browsing works; modal handles discovery |
 
 ## Traceability
 
@@ -176,10 +204,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 **Coverage:**
 - v1.0 requirements: 26 total (all complete)
 - v1.1 requirements: 10 total (all complete)
-- v1.2 requirements: 8 total
-- Mapped to phases: 8
-- Unmapped: 0 ✓
+- v1.2 requirements: 8 total (all complete)
+- v1.3 requirements: 9 total
+- Mapped to phases: 0 ⚠️
+- Unmapped: 9 ⚠️
 
 ---
 *Requirements defined: 2026-02-23*
-*Last updated: 2026-02-24 after v1.2 roadmap creation*
+*Last updated: 2026-02-24 after v1.3 requirements definition*
