@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-02-24)
 Phase: 14 (Trigger Descriptions and Mapping Editor Polish) — complete
 Plan: 01 of 01 complete
 Status: Phase 14 complete, ready for Phase 15
-Last activity: 2026-02-24 - Completed quick task 2: Fix peon hooks recognized as external in UI
+Last activity: 2026-02-24 - Completed quick task 3: Make sure README is up to date
 
 ```
 Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅✅][v1.3 ✅✅✅░░]
@@ -104,10 +104,11 @@ None.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 2 | Fix peon hooks recognized as external in UI | 2026-02-24 | bbeffc9 | [2-fix-peon-hooks-recognized-as-external-in](./quick/2-fix-peon-hooks-recognized-as-external-in/) |
+| 3 | Make sure README is up to date with the current feature set | 2026-02-24 | a6b8464 | [3-make-sure-readme-is-up-to-date-with-the-](./quick/3-make-sure-readme-is-up-to-date-with-the-/) |
 
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 14-trigger-descriptions-and-mapping-editor-polish/14-01-PLAN.md
+Stopped at: Completed quick task 3: make-sure-readme-is-up-to-date-with-the-/3-PLAN.md
 Resume file: None
 Next action: /gsd:plan-phase 15
