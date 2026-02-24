@@ -239,9 +239,12 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. The presets panel shows bundled preset chips for WC2 Alliance, SC2 Terran, SC2 Protoss, SC2 Zerg, SC:BW Terran, SC:BW Protoss, SC:BW Zerg, and SC:BW Misc
   2. Clicking a bundled preset chip loads a complete mapping set that plays sounds exclusively from that sound pack
-  3. Bundled preset chips have no delete (×) button — they cannot be removed from the presets list
+  3. Bundled preset chips have no delete (x) button — they cannot be removed from the presets list
   4. Clicking Load on a bundled preset produces audible sound output when a relevant Claude Code event fires
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 12-01-PLAN.md -- Create 8 bundled preset JSON files and protect bundled chips from deletion in UI
 
 ### Phase 13: Server Foundation
 **Goal**: The server correctly serves SC2 MP3 files to the browser and exposes trigger event descriptions so client-side features have a stable data source
