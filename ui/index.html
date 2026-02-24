@@ -871,12 +871,11 @@
             const badgeLabel = isPeon ? "peon" : "external"
             const cmd = group.hooks && group.hooks[0] ? group.hooks[0].command : ""
             const isAsync = group.hooks && group.hooks[0] && group.hooks[0].async === true
-            const truncated = cmd.length > 80 ? cmd.slice(0, 80) + "..." : cmd
             const asyncBadge = isAsync ? '<span class="hook-badge hook-badge-async">async</span>' : ""
             return `<div class="hook-group-row">
               <span class="hook-badge ${badgeClass}">${badgeLabel}</span>
               ${asyncBadge}
-              <span class="hook-command" title="${cmd.replace(/"/g, '&quot;')}">${truncated}</span>
+              <span class="hook-command">${cmd.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>
             </div>`
           }).join("")
 
