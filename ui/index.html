@@ -385,6 +385,12 @@
       color: var(--text-primary);
     }
 
+    .sound-play-btn {
+      padding: 6px 8px;
+      min-width: 28px;
+      flex-shrink: 0;
+    }
+
     .empty-state {
       padding: 24px;
       text-align: center;
@@ -892,6 +898,7 @@
     let selectedSoundFiles = new Set()
     let allSoundFiles = []
     let hookRowMeta = new Map()
+    let previewAudio = null
 
     async function init() {
       const metaRes = await fetch("/api/meta")
@@ -1337,6 +1344,16 @@
       audio.play()
     }
 
+    function previewMappingSound(path) {
+      if (previewAudio !== null) {
+        previewAudio.pause()
+        previewAudio.currentTime = 0
+        previewAudio = null
+      }
+      previewAudio = new Audio('/api/sounds/play/' + encodeURIComponent(path))
+      previewAudio.play()
+    }
+
     function confirmSoundSelection() {
       if (selectedSoundFiles.size === 0) {
         showToast("Please select at least one sound", "error")
@@ -1443,8 +1460,8 @@
               <div class="mapping-section-title">Sounds (plays one at random)</div>
               ${(mapping.sounds || []).map((sound, si) => `
                 <div class="sound-row">
+                  <button class="btn-ghost btn-sm sound-play-btn" onclick="previewMappingSound('${sound}')">&#9654;</button>
                   <span class="sound-path">${sound}</span>
-                  <button class="btn-ghost btn-sm" onclick="playSound('${sound}')">Play</button>
                   <button class="btn-delete btn-sm" onclick="removeSound(${mi}, ${si})">×</button>
                 </div>
               `).join("")}
