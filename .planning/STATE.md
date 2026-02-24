@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-02-24)
 Phase: 14 (Trigger Descriptions and Mapping Editor Polish) — complete
 Plan: 01 of 01 complete
 Status: Phase 14 complete, ready for Phase 15
-Last activity: 2026-02-24 — CSS tooltip on trigger selects, inline description line, whisper save fix
+Last activity: 2026-02-24 - Completed quick task 2: Fix peon hooks recognized as external in UI
 
 ```
 Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅✅][v1.3 ✅✅✅░░]
@@ -98,6 +98,12 @@ None.
 ### Blockers/Concerns
 
 None.
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 2 | Fix peon hooks recognized as external in UI | 2026-02-24 | bbeffc9 | [2-fix-peon-hooks-recognized-as-external-in](./quick/2-fix-peon-hooks-recognized-as-external-in/) |
 
 ## Session Continuity
 
