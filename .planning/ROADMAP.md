@@ -178,7 +178,7 @@ Plans:
 
 </details>
 
-### 🚧 v1.3 Config UX Polish (Phases 12-16)
+### v1.3 Config UX Polish (Phases 12-16)
 
 **Milestone Goal:** Make the config UI intuitive — users understand triggers, preview sounds, load presets confidently, and edit mappings without friction.
 
@@ -189,48 +189,6 @@ Plans:
 - [ ] **Phase 16: Preset Visual Preview** - Hover preview popover and unsaved-changes guard
 
 ## Phase Details
-
-### Phase 9: Delete API
-**Goal**: The server can delete any hook group from ~/.claude/settings.json via a validated endpoint, and claude-peon.json writes are safe from corruption
-**Depends on**: Phase 8
-**Requirements**: SAFE-01
-**Success Criteria** (what must be TRUE):
-  1. `saveConfig()` in server.js writes to a `.tmp` file and renames atomically — a process kill mid-write leaves claude-peon.json intact
-  2. `DELETE /api/hooks` with a valid `{ event, groupIndex }` body removes the targeted hook group from ~/.claude/settings.json and returns `{ success: true }`
-  3. `DELETE /api/hooks` with an out-of-bounds groupIndex returns a 400 error and leaves settings.json unchanged
-  4. After a successful delete, calling `GET /api/hooks` no longer returns the deleted group
-**Plans**: TBD
-
-Plans:
-- [x] 09-01-PLAN.md -- Fix saveConfig() atomicity and add DELETE /api/hooks endpoint
-
-### Phase 10: Delete UI
-**Goal**: Every hook group row in the Active Hooks panel has a working delete button — clicking it confirms, sends the delete request, shows a toast, and refreshes the panel
-**Depends on**: Phase 9
-**Requirements**: DEL-01, DEL-02, DEL-03, DEL-04, DEL-05
-**Success Criteria** (what must be TRUE):
-  1. Every hook group row in the Active Hooks panel shows a delete button (x or trash icon)
-  2. Clicking a delete button on an external hook shows a confirmation dialog naming the event and command before proceeding
-  3. Clicking a delete button on a peon hook shows a confirmation dialog that additionally notes the sound mapping will be removed
-  4. After confirming deletion, the Active Hooks panel refreshes and the deleted row is gone without a full page reload
-  5. After confirming deletion, a toast notification appears confirming the hook was deleted
-**Plans**: TBD
-
-Plans:
-- [x] 10-01-PLAN.md -- Add delete buttons to Active Hooks panel with confirm dialog, toast, and panel refresh
-
-### Phase 11: Peon Cascade
-**Goal**: Deleting a peon hook row removes the corresponding mapping from claude-peon.json, and when the last peon mapping is gone the peon groups in settings.json are auto-stripped
-**Depends on**: Phase 10
-**Requirements**: CASC-01, CASC-02
-**Success Criteria** (what must be TRUE):
-  1. Deleting a peon hook row from the Active Hooks panel removes the corresponding mapping entry from claude-peon.json (the Mappings editor reflects the removal on next load)
-  2. When the last peon mapping is deleted, all `_claude_peon: true` hook groups are automatically removed from ~/.claude/settings.json without any additional user action
-  3. After the last peon mapping is deleted, the Active Hooks panel shows no peon hook groups
-**Plans**: TBD
-
-Plans:
-- [x] 11-01-PLAN.md -- Add deletePeonMapping() endpoint and peon mapping rows with cascade delete in UI
 
 ### Phase 12: Bundled Presets
 **Goal**: Every sound pack in the repo has a bundled preset so users can load any pack without configuring from scratch
@@ -244,7 +202,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 12-01-PLAN.md -- Create 8 bundled preset JSON files and protect bundled chips from deletion in UI
+- [x] 12-01-PLAN.md -- Create 8 bundled preset JSON files and protect bundled chips from deletion in UI
 
 ### Phase 13: Server Foundation
 **Goal**: The server correctly serves SC2 MP3 files to the browser and exposes trigger event descriptions so client-side features have a stable data source
@@ -254,7 +212,10 @@ Plans:
   1. Clicking the play button on an SC2 sound in the sound browser modal plays the sound without a MIME type error in the browser console
   2. GET /api/meta returns an `eventDescriptions` object with a description string for each of the six Claude Code hook events (Stop, PreToolUse, PostToolUse, Notification, SessionStart, UserPromptSubmit)
   3. GET /api/meta also returns descriptions for tool trigger types (tool.before, tool.after)
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 13-01-PLAN.md -- Fix MP3 MIME type in sound serve endpoint and add event/tool descriptions to /api/meta
 
 ### Phase 14: Trigger Descriptions and Mapping Editor Polish
 **Goal**: Users can see what each trigger event means directly in the mapping card — and the whisper toggle is discoverable without knowing the JSON schema
@@ -307,7 +268,7 @@ Phases execute in numeric order: 1 → 2 → ... → 11 → 12 → 13 → 14 →
 | 9. Delete API | v1.2 | 1/1 | Complete | 2026-02-24 |
 | 10. Delete UI | v1.2 | 1/1 | Complete | 2026-02-24 |
 | 11. Peon Cascade | v1.2 | 1/1 | Complete | 2026-02-24 |
-| 12. Bundled Presets | 1/1 | Complete    | 2026-02-24 | - |
+| 12. Bundled Presets | v1.3 | 1/1 | Complete | 2026-02-24 |
 | 13. Server Foundation | v1.3 | 0/1 | Not started | - |
 | 14. Trigger Descriptions and Mapping Editor Polish | v1.3 | 0/1 | Not started | - |
 | 15. Inline Sound Playback | v1.3 | 0/1 | Not started | - |
