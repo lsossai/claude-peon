@@ -282,9 +282,6 @@
     }
 
     .trigger-row, .sound-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
       padding: 10px 14px;
       background: var(--bg-tertiary);
       border: 1px solid var(--border-color);
@@ -292,8 +289,57 @@
       margin-bottom: 8px;
     }
 
+    .trigger-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sound-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .trigger-row:last-of-type, .sound-row:last-of-type {
       margin-bottom: 12px;
+    }
+
+    .trigger-row-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .trigger-description {
+      font-size: 11px;
+      color: var(--text-muted);
+      padding-left: 2px;
+      min-height: 14px;
+    }
+
+    /* === Trigger Tooltips === */
+    [data-tooltip] {
+      position: relative;
+    }
+
+    [data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 1.4;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      white-space: normal;
+      max-width: 280px;
+      z-index: 100;
+      pointer-events: none;
     }
 
     select, input[type="text"] {
@@ -1146,6 +1192,7 @@
 
     function updateMappingWhisper(index, checked) {
       config.mappings[index].whisper = checked
+      saveConfig()
     }
 
     function addTrigger(mappingIndex) {
@@ -1413,8 +1460,9 @@
       let kvInputs = ""
 
       if (trigger.type === "event") {
+        const tooltipAttr = (meta.eventDescriptions?.[trigger.event] || "").replace(/"/g, "&quot;")
         valueSelect = `
-          <select onchange="updateTriggerValue(${mi}, ${ti}, this.value)">
+          <select data-tooltip="${tooltipAttr}" onchange="updateTriggerValue(${mi}, ${ti}, this.value)">
             ${[...meta.eventValues].sort().map(v => `<option value="${v}" ${v === trigger.event ? 'selected' : ''}>${v}</option>`).join("")}
           </select>
         `
@@ -1426,23 +1474,31 @@
             </div>
           `
         }
-      } else if (trigger.type === "tool.before") {
+      } else if (trigger.type === "tool.before" || trigger.type === "tool.after") {
+        const tooltipAttr = (meta.toolDescriptions?.[trigger.type] || "").replace(/"/g, "&quot;")
         valueSelect = `
-          <select onchange="updateTriggerValue(${mi}, ${ti}, this.value)">
+          <select data-tooltip="${tooltipAttr}" onchange="updateTriggerValue(${mi}, ${ti}, this.value)">
             ${[...meta.toolValues].sort().map(v => `<option value="${v}" ${v === trigger.tool ? 'selected' : ''}>${v}</option>`).join("")}
           </select>
         `
       }
 
+      const desc = trigger.type === "event"
+        ? (meta.eventDescriptions?.[trigger.event] || "")
+        : (meta.toolDescriptions?.[trigger.type] || "")
+
       return `
         <div class="trigger-row">
-          <select onchange="updateTriggerType(${mi}, ${ti}, this.value)">
-            ${meta.triggerTypes.map(t => `<option value="${t}" ${t === trigger.type ? 'selected' : ''}>${t}</option>`).join("")}
-          </select>
-          ${valueSelect}
-          ${kvInputs}
-          <div style="flex:1"></div>
-          <button class="btn-delete btn-sm" onclick="removeTrigger(${mi}, ${ti})">×</button>
+          <div class="trigger-row-controls">
+            <select onchange="updateTriggerType(${mi}, ${ti}, this.value)">
+              ${meta.triggerTypes.map(t => `<option value="${t}" ${t === trigger.type ? 'selected' : ''}>${t}</option>`).join("")}
+            </select>
+            ${valueSelect}
+            ${kvInputs}
+            <div style="flex:1"></div>
+            <button class="btn-delete btn-sm" onclick="removeTrigger(${mi}, ${ti})">×</button>
+          </div>
+          <div class="trigger-description">${desc.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
         </div>
       `
     }
