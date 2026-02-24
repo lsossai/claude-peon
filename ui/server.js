@@ -46,6 +46,20 @@ const NOTIFICATION_TYPES = [
   "auth_success",
 ]
 
+const EVENT_DESCRIPTIONS = {
+  Stop:             "Agent finished its turn — fires once when Claude stops working",
+  PreToolUse:       "Before any tool call executes — fires before bash, read, write, edit, etc.",
+  PostToolUse:      "After any tool call completes — fires after bash, read, write, edit, etc.",
+  Notification:     "Claude Code sends a notification — permission prompts, idle prompts, auth events",
+  SessionStart:     "A new Claude Code session begins",
+  UserPromptSubmit: "User submits a message to Claude",
+}
+
+const TOOL_DESCRIPTIONS = {
+  "tool.before": "Fires before the selected tool executes",
+  "tool.after":  "Fires after the selected tool completes",
+}
+
 const PLAY_JS_PATH = resolve(ROOT, "play.js")
 
 const PEON_EVENTS = [
@@ -386,6 +400,8 @@ function handleApi(req) {
       eventValues: EVENT_VALUES,
       toolValues: TOOL_VALUES,
       notificationTypes: NOTIFICATION_TYPES,
+      eventDescriptions: EVENT_DESCRIPTIONS,
+      toolDescriptions: TOOL_DESCRIPTIONS,
     })
   }
 
