@@ -3,7 +3,8 @@
 ## Milestones
 
 - ✅ **v1.0 Convert to Claude Code Hooks** - Phases 1-5 (shipped 2026-02-23)
-- 🚧 **v1.1 Polish and Fix** - Phases 6-8 (in progress)
+- ✅ **v1.1 Polish and Fix** - Phases 6-8 (shipped 2026-02-24)
+- 🚧 **v1.2 Delete Hooks from UI** - Phases 9-11 (in progress)
 
 ## Phases
 
@@ -84,9 +85,8 @@ Plans:
 
 </details>
 
-### 🚧 v1.1 Polish and Fix (In Progress)
-
-**Milestone Goal:** Make sounds actually play and make the UI reflect reality — fix the broken invocation path, remove dead scope complexity, and surface all installed hooks.
+<details>
+<summary>✅ v1.1 Polish and Fix (Phases 6-8) - SHIPPED 2026-02-24</summary>
 
 #### Phase 6: Fix Sound Playback
 **Goal**: Sounds play reliably in Claude Code sessions — play.js is invocable as a hook command and the Apply button writes a command string that survives non-login shell environments
@@ -126,12 +126,57 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 08-01-PLAN.md -- Add GET /api/hooks endpoint and Active Hooks read-only panel to UI
+- [x] 08-01-PLAN.md -- Add GET /api/hooks endpoint and Active Hooks read-only panel to UI
+
+</details>
+
+### 🚧 v1.2 Delete Hooks from UI (Phases 9-11)
+
+**Milestone Goal:** Let users delete any hook directly from the Active Hooks panel — both peon-installed and external hooks — with confirmation, toast feedback, and panel refresh.
+
+- [ ] **Phase 9: Delete API** - Server endpoint and saveConfig() atomicity fix
+- [ ] **Phase 10: Delete UI** - Delete buttons, confirmation dialog, toast, and panel refresh
+- [ ] **Phase 11: Peon Cascade** - Mapping removal from claude-peon.json and last-mapping auto-strip from settings.json
+
+## Phase Details
+
+### Phase 9: Delete API
+**Goal**: The server can delete any hook group from ~/.claude/settings.json via a validated endpoint, and claude-peon.json writes are safe from corruption
+**Depends on**: Phase 8
+**Requirements**: SAFE-01
+**Success Criteria** (what must be TRUE):
+  1. `saveConfig()` in server.js writes to a `.tmp` file and renames atomically — a process kill mid-write leaves claude-peon.json intact
+  2. `DELETE /api/hooks` with a valid `{ event, groupIndex }` body removes the targeted hook group from ~/.claude/settings.json and returns `{ success: true }`
+  3. `DELETE /api/hooks` with an out-of-bounds groupIndex returns a 400 error and leaves settings.json unchanged
+  4. After a successful delete, calling `GET /api/hooks` no longer returns the deleted group
+**Plans**: TBD
+
+### Phase 10: Delete UI
+**Goal**: Every hook group row in the Active Hooks panel has a working delete button — clicking it confirms, sends the delete request, shows a toast, and refreshes the panel
+**Depends on**: Phase 9
+**Requirements**: DEL-01, DEL-02, DEL-03, DEL-04, DEL-05
+**Success Criteria** (what must be TRUE):
+  1. Every hook group row in the Active Hooks panel shows a delete button (x or trash icon)
+  2. Clicking a delete button on an external hook shows a confirmation dialog naming the event and command before proceeding
+  3. Clicking a delete button on a peon hook shows a confirmation dialog that additionally notes the sound mapping will be removed
+  4. After confirming deletion, the Active Hooks panel refreshes and the deleted row is gone without a full page reload
+  5. After confirming deletion, a toast notification appears confirming the hook was deleted
+**Plans**: TBD
+
+### Phase 11: Peon Cascade
+**Goal**: Deleting a peon hook row removes the corresponding mapping from claude-peon.json, and when the last peon mapping is gone the peon groups in settings.json are auto-stripped
+**Depends on**: Phase 10
+**Requirements**: CASC-01, CASC-02
+**Success Criteria** (what must be TRUE):
+  1. Deleting a peon hook row from the Active Hooks panel removes the corresponding mapping entry from claude-peon.json (the Mappings editor reflects the removal on next load)
+  2. When the last peon mapping is deleted, all `_claude_peon: true` hook groups are automatically removed from ~/.claude/settings.json without any additional user action
+  3. After the last peon mapping is deleted, the Active Hooks panel shows no peon hook groups
+**Plans**: TBD
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -140,6 +185,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 3. Apply/Remove Endpoints | v1.0 | 1/1 | Complete | 2026-02-23 |
 | 4. UI Apply Button and UX | v1.0 | 1/1 | Complete | 2026-02-23 |
 | 5. Branding and Cleanup | v1.0 | 1/1 | Complete | 2026-02-23 |
-| 6. Fix Sound Playback | 1/1 | Complete   | 2026-02-24 | - |
+| 6. Fix Sound Playback | v1.1 | 1/1 | Complete | 2026-02-24 |
 | 7. Remove Project Scope | v1.1 | 1/1 | Complete | 2026-02-24 |
-| 8. UI Loads Existing Hooks | 1/1 | Complete   | 2026-02-24 | - |
+| 8. UI Loads Existing Hooks | v1.1 | 1/1 | Complete | 2026-02-24 |
+| 9. Delete API | v1.2 | 0/1 | Not started | - |
+| 10. Delete UI | v1.2 | 0/1 | Not started | - |
+| 11. Peon Cascade | v1.2 | 0/1 | Not started | - |

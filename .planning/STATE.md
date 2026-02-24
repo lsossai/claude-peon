@@ -9,17 +9,22 @@ See: .planning/PROJECT.md (updated 2026-02-24)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 9 (Delete API)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-02-24 — Milestone v1.2 started
+Status: Not started
+Last activity: 2026-02-24 — Milestone v1.2 roadmap created (Phases 9-11)
+
+```
+Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 □□□]
+          Phase:  1  2  3  4  5   6  7  8   9 10 11
+```
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
+- Total plans completed: 8
 - Average duration: ~4 min
-- Total execution time: ~22 min
+- Total execution time: ~34 min
 
 **By Phase (v1.0):**
 
@@ -53,6 +58,9 @@ Recent decisions affecting current work:
 - [Phase 07-remove-project-scope]: stripProjectPeonHooks() is best-effort (errors silently ignored) to avoid crashing apply/remove on corrupt project settings
 - [Phase 08-ui-loads-existing-hooks]: readGlobalHooks() returns raw hooks object with no filtering — UI uses _claude_peon marker to distinguish peon vs external badges
 - [Phase 08-ui-loads-existing-hooks]: Active Hooks panel placed above Mappings section so it is visible on page load without scrolling
+- [v1.2 roadmap]: SAFE-01 co-located with Phase 9 (server endpoint) — saveConfig() atomicity fix is a hard prerequisite before any code writes claude-peon.json
+- [v1.2 roadmap]: CASC-01/CASC-02 deferred to Phase 11 — core delete is useful without peon cascade; cascade semantics (Option A auto-strip) resolved during planning
+- [v1.2 roadmap]: Peon deletion deletes the mapping from claude-peon.json (the "peon mapping config"); settings.json peon groups persist until last mapping is gone (CASC-02)
 
 ### Pending Todos
 
@@ -65,5 +73,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 08-ui-loads-existing-hooks-01-PLAN.md. All phases complete.
+Stopped at: v1.2 roadmap created. Phase 9 not yet planned.
 Resume file: None

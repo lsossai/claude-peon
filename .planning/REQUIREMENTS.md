@@ -164,22 +164,22 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VISI-01 | Phase 8 | Complete |
 | VISI-02 | Phase 8 | Complete |
 | VISI-03 | Phase 8 | Complete |
-| DEL-01 | — | Pending |
-| DEL-02 | — | Pending |
-| DEL-03 | — | Pending |
-| DEL-04 | — | Pending |
-| DEL-05 | — | Pending |
-| SAFE-01 | — | Pending |
-| CASC-01 | — | Pending |
-| CASC-02 | — | Pending |
+| DEL-01 | Phase 10 | Pending |
+| DEL-02 | Phase 10 | Pending |
+| DEL-03 | Phase 10 | Pending |
+| DEL-04 | Phase 10 | Pending |
+| DEL-05 | Phase 10 | Pending |
+| SAFE-01 | Phase 9 | Pending |
+| CASC-01 | Phase 11 | Pending |
+| CASC-02 | Phase 11 | Pending |
 
 **Coverage:**
 - v1.0 requirements: 26 total (all complete)
 - v1.1 requirements: 10 total (all complete)
 - v1.2 requirements: 8 total
-- Mapped to phases: 0
-- Unmapped: 8 ⚠️
+- Mapped to phases: 8
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-02-23*
-*Last updated: 2026-02-24 after v1.2 requirements definition*
+*Last updated: 2026-02-24 after v1.2 roadmap creation*
