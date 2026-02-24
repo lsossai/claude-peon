@@ -1,0 +1,98 @@
+{
+  "volume": 3,
+  "randomPreset": true,
+  "mappings": [
+    {
+      "name": "welcome",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "SessionStart"
+        }
+      ],
+      "sounds": [
+        "sc2-zerg/infestedterran-ready00.mp3"
+      ]
+    },
+    {
+      "name": "acknowledge",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "UserPromptSubmit"
+        }
+      ],
+      "sounds": [
+        "sc2-zerg/changeling-marineyes00.mp3",
+        "sc2-zerg/changeling-zealotyes00.mp3",
+        "sc2-zerg/changeling-zealotyes01.mp3"
+      ]
+    },
+    {
+      "name": "work-complete",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "Stop"
+        }
+      ],
+      "sounds": [
+        "sc2-zerg/alert-zergevolutioncomplete.mp3"
+      ]
+    },
+    {
+      "name": "permission-asked",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "Notification"
+        }
+      ],
+      "sounds": [
+        "sc2-zerg/alert-zergmutationcomplete.mp3"
+      ]
+    },
+    {
+      "name": "working-hard",
+      "whisper": true,
+      "triggers": [
+        {
+          "type": "tool.before",
+          "tool": "todowrite"
+        },
+        {
+          "type": "tool.before",
+          "tool": "todoread"
+        },
+        {
+          "type": "tool.before",
+          "tool": "read"
+        },
+        {
+          "type": "tool.before",
+          "tool": "write"
+        },
+        {
+          "type": "tool.before",
+          "tool": "edit"
+        },
+        {
+          "type": "tool.before",
+          "tool": "glob"
+        },
+        {
+          "type": "tool.before",
+          "tool": "grep"
+        },
+        {
+          "type": "tool.before",
+          "tool": "bash"
+        }
+      ],
+      "sounds": [
+        "sc2-zerg/changeling-marinewhat00.mp3",
+        "sc2-zerg/changeling-marinewhat01.mp3"
+      ]
+    }
+  ]
+}

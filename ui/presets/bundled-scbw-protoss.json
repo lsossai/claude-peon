@@ -1,0 +1,100 @@
+{
+  "volume": 3,
+  "randomPreset": true,
+  "mappings": [
+    {
+      "name": "welcome",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "SessionStart"
+        }
+      ],
+      "sounds": [
+        "scbw-protoss/probe-rdy00.wav"
+      ]
+    },
+    {
+      "name": "acknowledge",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "UserPromptSubmit"
+        }
+      ],
+      "sounds": [
+        "scbw-protoss/probe-yes00.wav",
+        "scbw-protoss/probe-yes01.wav",
+        "scbw-protoss/probe-yes02.wav",
+        "scbw-protoss/probe-yes03.wav"
+      ]
+    },
+    {
+      "name": "work-complete",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "Stop"
+        }
+      ],
+      "sounds": [
+        "scbw-protoss/advisor-upd00.wav"
+      ]
+    },
+    {
+      "name": "permission-asked",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "Notification"
+        }
+      ],
+      "sounds": [
+        "scbw-protoss/probe-pss00.wav"
+      ]
+    },
+    {
+      "name": "working-hard",
+      "whisper": true,
+      "triggers": [
+        {
+          "type": "tool.before",
+          "tool": "todowrite"
+        },
+        {
+          "type": "tool.before",
+          "tool": "todoread"
+        },
+        {
+          "type": "tool.before",
+          "tool": "read"
+        },
+        {
+          "type": "tool.before",
+          "tool": "write"
+        },
+        {
+          "type": "tool.before",
+          "tool": "edit"
+        },
+        {
+          "type": "tool.before",
+          "tool": "glob"
+        },
+        {
+          "type": "tool.before",
+          "tool": "grep"
+        },
+        {
+          "type": "tool.before",
+          "tool": "bash"
+        }
+      ],
+      "sounds": [
+        "scbw-protoss/probe-wht00.wav",
+        "scbw-protoss/probe-wht01.wav",
+        "scbw-protoss/probe-wht02.wav"
+      ]
+    }
+  ]
+}

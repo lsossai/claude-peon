@@ -1,0 +1,99 @@
+{
+  "volume": 3,
+  "randomPreset": true,
+  "mappings": [
+    {
+      "name": "welcome",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "SessionStart"
+        }
+      ],
+      "sounds": [
+        "scbw-misc/transmission.wav"
+      ]
+    },
+    {
+      "name": "acknowledge",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "UserPromptSubmit"
+        }
+      ],
+      "sounds": [
+        "scbw-misc/uicwht00.wav",
+        "scbw-misc/unrwht00.wav",
+        "scbw-misc/utmwht00.wav"
+      ]
+    },
+    {
+      "name": "work-complete",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "Stop"
+        }
+      ],
+      "sounds": [
+        "scbw-misc/youwin.wav"
+      ]
+    },
+    {
+      "name": "permission-asked",
+      "triggers": [
+        {
+          "type": "event",
+          "event": "Notification"
+        }
+      ],
+      "sounds": [
+        "scbw-misc/perror.wav"
+      ]
+    },
+    {
+      "name": "working-hard",
+      "whisper": true,
+      "triggers": [
+        {
+          "type": "tool.before",
+          "tool": "todowrite"
+        },
+        {
+          "type": "tool.before",
+          "tool": "todoread"
+        },
+        {
+          "type": "tool.before",
+          "tool": "read"
+        },
+        {
+          "type": "tool.before",
+          "tool": "write"
+        },
+        {
+          "type": "tool.before",
+          "tool": "edit"
+        },
+        {
+          "type": "tool.before",
+          "tool": "glob"
+        },
+        {
+          "type": "tool.before",
+          "tool": "grep"
+        },
+        {
+          "type": "tool.before",
+          "tool": "bash"
+        }
+      ],
+      "sounds": [
+        "scbw-misc/burrowup.wav",
+        "scbw-misc/burrowdn.wav",
+        "scbw-misc/land.wav"
+      ]
+    }
+  ]
+}
