@@ -86,8 +86,8 @@ Requirements for milestone v1.2: Delete Hooks from UI. Each maps to roadmap phas
 
 ### Peon Cascade
 
-- [ ] **CASC-01**: Deleting a peon hook group removes the corresponding mapping from claude-peon.json
-- [ ] **CASC-02**: When the last peon mapping is deleted, all peon hook groups are auto-stripped from settings.json
+- [x] **CASC-01**: Deleting a peon hook group removes the corresponding mapping from claude-peon.json
+- [x] **CASC-02**: When the last peon mapping is deleted, all peon hook groups are auto-stripped from settings.json
 
 ## Future Requirements
 
@@ -170,8 +170,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DEL-04 | Phase 10 | Complete |
 | DEL-05 | Phase 10 | Complete |
 | SAFE-01 | Phase 9 | Complete |
-| CASC-01 | Phase 11 | Pending |
-| CASC-02 | Phase 11 | Pending |
+| CASC-01 | Phase 11 | Complete |
+| CASC-02 | Phase 11 | Complete |
 
 **Coverage:**
 - v1.0 requirements: 26 total (all complete)

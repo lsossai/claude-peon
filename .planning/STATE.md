@@ -9,13 +9,13 @@ See: .planning/PROJECT.md (updated 2026-02-24)
 
 ## Current Position
 
-Phase: 10 (Delete UI)
+Phase: 11 (Peon Cascade)
 Plan: 1/1 Complete
 Status: Complete
-Last activity: 2026-02-24 — Phase 10 complete: delete buttons, hookRowMeta Map, confirmation dialogs, toast feedback, panel refresh
+Last activity: 2026-02-24 — Phase 11 complete: deletePeonMapping() server function, DELETE /api/peon-mappings route, peon mapping rows in Active Hooks panel, forked deleteHookGroup() on isPeon, CASC-01 + CASC-02 implemented
 
 ```
-Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅□]
+Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅✅]
           Phase:  1  2  3  4  5   6  7  8   9 10 11
 ```
 
@@ -42,6 +42,7 @@ Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅□]
 | Phase 08-ui-loads-existing-hooks P01 | 1 | 2 tasks | 2 files |
 | Phase 09-delete-api P01 | 2 | 2 tasks | 1 files |
 | Phase 10-delete-ui P01 | 1 | 2 tasks | 1 files |
+| Phase 11-peon-cascade P01 | 2min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,10 @@ Recent decisions affecting current work:
 - [Phase 10-delete-ui]: hookRowMeta Map keyed by eventName:groupIndex avoids unsafe command string injection into onclick attributes
 - [Phase 10-delete-ui]: Distinct confirmation text branches on isPeon flag — peon warns about Re-install with Apply, external warns deletion may be permanent
 - [Phase 10-delete-ui]: loadActiveHooks() added to apply/remove paths (not only delete) for full panel consistency across all mutation actions
+- [Phase 11-peon-cascade]: Active Hooks peon rows sourced from claude-peon.json (one per mapping), not settings.json (would be one per event group — semantically wrong for cascade delete)
+- [Phase 11-peon-cascade]: peon:N hookRowMeta key prefix is disjoint from any real Claude Code event name — no collision with eventName:groupIndex keys
+- [Phase 11-peon-cascade]: CASC-02 removeHooks() wrapped in try/catch — ghost hooks (no trigger match) are silent no-ops; prevents cascade failure from blocking mapping deletion
+- [Phase 11-peon-cascade]: await loadConfig() after peon delete (not renderMappings() directly) — fetches fresh disk state before re-rendering Mappings section
 
 ### Pending Todos
 
@@ -81,5 +86,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 10-delete-ui-01-PLAN.md
+Stopped at: Completed 11-peon-cascade-01-PLAN.md
 Resume file: None
