@@ -210,6 +210,37 @@ function deleteHook(event, groupIndex) {
   return { success: true }
 }
 
+function deletePeonMapping(mappingIndex, expectedName) {
+  const config = loadConfig()
+  const mappings = config.mappings || []
+
+  if (mappingIndex < 0 || mappingIndex >= mappings.length) {
+    return { success: false, error: `Index ${mappingIndex} out of range` }
+  }
+
+  // Name validation guards against stale client index targeting wrong mapping
+  if (expectedName && mappings[mappingIndex].name !== expectedName) {
+    return { success: false, error: "Mapping name mismatch — please reload and retry" }
+  }
+
+  mappings.splice(mappingIndex, 1)
+  config.mappings = mappings
+  saveConfig(config) // atomic tmp+renameSync — SAFE-01 in place since Phase 9
+
+  // CASC-02: when last mapping deleted, auto-strip all peon groups from settings.json
+  // Write order: claude-peon.json first (above), settings.json second (below)
+  // Ghost hooks (play.js finds no trigger) are harmless no-ops if removeHooks fails
+  if (mappings.length === 0) {
+    try {
+      removeHooks() // handles empty event/hooks key cleanup internally
+    } catch {
+      // Non-fatal: mapping is already deleted; ghost hooks run play.js and find no triggers
+    }
+  }
+
+  return { success: true, cascaded: mappings.length === 0 }
+}
+
 function stripProjectPeonHooks() {
   try {
     const projectSettingsPath = resolve(process.cwd(), ".claude", "settings.json")
@@ -474,6 +505,27 @@ function handleApi(req) {
       }
       try {
         const result = deleteHook(event, groupIndex)
+        if (!result.success) {
+          return Response.json(result, { status: 400 })
+        }
+        return Response.json(result)
+      } catch (error) {
+        return Response.json({ success: false, error: error?.message ?? "Unknown error" }, { status: 500 })
+      }
+    })
+  }
+
+  if (path === "/api/peon-mappings" && req.method === "DELETE") {
+    return req.json().then((body) => {
+      const { mappingIndex, name } = body
+      if (typeof mappingIndex !== "number" || mappingIndex < 0) {
+        return Response.json(
+          { success: false, error: "mappingIndex (number >= 0) is required" },
+          { status: 400 }
+        )
+      }
+      try {
+        const result = deletePeonMapping(mappingIndex, name)
         if (!result.success) {
           return Response.json(result, { status: 400 })
         }
