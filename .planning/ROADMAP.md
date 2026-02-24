@@ -307,7 +307,7 @@ Phases execute in numeric order: 1 → 2 → ... → 11 → 12 → 13 → 14 →
 | 9. Delete API | v1.2 | 1/1 | Complete | 2026-02-24 |
 | 10. Delete UI | v1.2 | 1/1 | Complete | 2026-02-24 |
 | 11. Peon Cascade | v1.2 | 1/1 | Complete | 2026-02-24 |
-| 12. Bundled Presets | 1/1 | Complete   | 2026-02-24 | - |
+| 12. Bundled Presets | 1/1 | Complete    | 2026-02-24 | - |
 | 13. Server Foundation | v1.3 | 0/1 | Not started | - |
 | 14. Trigger Descriptions and Mapping Editor Polish | v1.3 | 0/1 | Not started | - |
 | 15. Inline Sound Playback | v1.3 | 0/1 | Not started | - |
