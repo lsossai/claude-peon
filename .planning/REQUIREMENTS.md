@@ -74,11 +74,11 @@ Requirements for milestone v1.2: Delete Hooks from UI. Each maps to roadmap phas
 
 ### Hook Deletion
 
-- [ ] **DEL-01**: User can delete any individual hook group from the Active Hooks panel via a delete button
-- [ ] **DEL-02**: User sees a confirmation dialog before deletion proceeds
-- [ ] **DEL-03**: Confirmation text distinguishes peon hooks (warns mapping will be removed) from external hooks
-- [ ] **DEL-04**: Active Hooks panel refreshes automatically after a successful deletion
-- [ ] **DEL-05**: User sees a toast notification confirming the hook was deleted
+- [x] **DEL-01**: User can delete any individual hook group from the Active Hooks panel via a delete button
+- [x] **DEL-02**: User sees a confirmation dialog before deletion proceeds
+- [x] **DEL-03**: Confirmation text distinguishes peon hooks (warns mapping will be removed) from external hooks
+- [x] **DEL-04**: Active Hooks panel refreshes automatically after a successful deletion
+- [x] **DEL-05**: User sees a toast notification confirming the hook was deleted
 
 ### File Safety
 
@@ -164,11 +164,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VISI-01 | Phase 8 | Complete |
 | VISI-02 | Phase 8 | Complete |
 | VISI-03 | Phase 8 | Complete |
-| DEL-01 | Phase 10 | Pending |
-| DEL-02 | Phase 10 | Pending |
-| DEL-03 | Phase 10 | Pending |
-| DEL-04 | Phase 10 | Pending |
-| DEL-05 | Phase 10 | Pending |
+| DEL-01 | Phase 10 | Complete |
+| DEL-02 | Phase 10 | Complete |
+| DEL-03 | Phase 10 | Complete |
+| DEL-04 | Phase 10 | Complete |
+| DEL-05 | Phase 10 | Complete |
 | SAFE-01 | Phase 9 | Complete |
 | CASC-01 | Phase 11 | Pending |
 | CASC-02 | Phase 11 | Pending |

@@ -9,13 +9,13 @@ See: .planning/PROJECT.md (updated 2026-02-24)
 
 ## Current Position
 
-Phase: 9 (Delete API)
+Phase: 10 (Delete UI)
 Plan: 1/1 Complete
 Status: Complete
-Last activity: 2026-02-24 — Phase 9 complete: atomic saveConfig() and DELETE /api/hooks endpoint
+Last activity: 2026-02-24 — Phase 10 complete: delete buttons, hookRowMeta Map, confirmation dialogs, toast feedback, panel refresh
 
 ```
-Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅□□]
+Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅✅□]
           Phase:  1  2  3  4  5   6  7  8   9 10 11
 ```
 
@@ -41,6 +41,7 @@ Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅□□]
 | Phase 07-remove-project-scope P01 | 1 | 2 tasks | 2 files |
 | Phase 08-ui-loads-existing-hooks P01 | 1 | 2 tasks | 2 files |
 | Phase 09-delete-api P01 | 2 | 2 tasks | 1 files |
+| Phase 10-delete-ui P01 | 1 | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,9 @@ Recent decisions affecting current work:
 - [Phase 09-delete-api]: deleteHook() allows deletion of any group by index including peon groups — server agnostic, UI controls what is deletable (Phase 10)
 - [Phase 09-delete-api]: Out-of-bounds groupIndex returns 400 (not 404) — signals bad request body, client should refresh
 - [Phase 09-delete-api]: deleteHook() touches settings.json only — claude-peon.json peon cascade deferred to Phase 11
+- [Phase 10-delete-ui]: hookRowMeta Map keyed by eventName:groupIndex avoids unsafe command string injection into onclick attributes
+- [Phase 10-delete-ui]: Distinct confirmation text branches on isPeon flag — peon warns about Re-install with Apply, external warns deletion may be permanent
+- [Phase 10-delete-ui]: loadActiveHooks() added to apply/remove paths (not only delete) for full panel consistency across all mutation actions
 
 ### Pending Todos
 
@@ -77,5 +81,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 09-delete-api-01-PLAN.md
+Stopped at: Completed 10-delete-ui-01-PLAN.md
 Resume file: None
