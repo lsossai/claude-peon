@@ -192,7 +192,18 @@ function readGlobalHooks() {
     return { hooks: {}, error: "Could not parse settings.json" }
   }
 
-  return { hooks: settings.hooks || {} }
+  // Re-tag peon groups: Claude Code strips unknown properties like _claude_peon
+  // from settings.json, so detect peon hooks by checking the command path instead
+  const hooks = settings.hooks || {}
+  for (const groups of Object.values(hooks)) {
+    if (!Array.isArray(groups)) continue
+    for (const g of groups) {
+      if (g.hooks && g.hooks.some(h => h.command && h.command.includes(PLAY_JS_PATH))) {
+        g._claude_peon = true
+      }
+    }
+  }
+  return { hooks }
 }
 
 function deleteHook(event, groupIndex) {
