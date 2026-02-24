@@ -845,6 +845,7 @@
     let selectedSoundDir = "."
     let selectedSoundFiles = new Set()
     let allSoundFiles = []
+    let hookRowMeta = new Map()
 
     async function init() {
       const metaRes = await fetch("/api/meta")
@@ -867,11 +868,13 @@
           return
         }
 
+        hookRowMeta = new Map()
+
         container.innerHTML = eventKeys.map(eventName => {
           const groups = hooks[eventName]
           if (!Array.isArray(groups) || groups.length === 0) return ""
 
-          const groupRows = groups.map(group => {
+          const groupRows = groups.map((group, gi) => {
             const isPeon = group._claude_peon === true
             const badgeClass = isPeon ? "hook-badge-peon" : "hook-badge-external"
             const badgeLabel = isPeon ? "peon" : "external"
@@ -879,11 +882,13 @@
             const isAsync = group.hooks && group.hooks[0] && group.hooks[0].async === true
             const asyncBadge = isAsync ? '<span class="hook-badge hook-badge-async">async</span>' : ""
             const matcherBadge = group.matcher ? `<span class="hook-badge hook-badge-matcher">${group.matcher}</span>` : ""
+            hookRowMeta.set(`${eventName}:${gi}`, { cmd, isPeon })
             return `<div class="hook-group-row">
               <span class="hook-badge ${badgeClass}">${badgeLabel}</span>
               ${matcherBadge}
               ${asyncBadge}
               <span class="hook-command">${cmd.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>
+              <button class="btn-delete btn-sm" onclick="deleteHookGroup('${eventName}', ${gi})">x</button>
             </div>`
           }).join("")
 
@@ -894,6 +899,39 @@
         }).filter(Boolean).join("")
       } catch (err) {
         container.innerHTML = '<div class="active-hooks-empty">Could not load hooks</div>'
+      }
+    }
+
+    async function deleteHookGroup(eventName, groupIndex) {
+      const rowMeta = hookRowMeta.get(`${eventName}:${groupIndex}`)
+      if (!rowMeta) {
+        showToast('Hook row not found - please reload', 'error')
+        return
+      }
+      const { cmd, isPeon } = rowMeta
+      const truncatedCmd = cmd.length > 60 ? cmd.slice(0, 60) + "..." : cmd
+      let message = `Delete hook from ${eventName}?\n\nCommand: ${truncatedCmd}`
+      if (isPeon) {
+        message += "\n\nThis will delete the hook registration. Re-install with Apply."
+      } else {
+        message += "\n\nThis hook was not installed by claude-peon. Deletion may be permanent."
+      }
+      if (!confirm(message)) return
+      try {
+        const res = await fetch('/api/hooks', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event: eventName, groupIndex })
+        })
+        const result = await res.json()
+        if (result.success) {
+          showToast(`Deleted hook from ${eventName}`, 'success')
+          await loadActiveHooks()
+        } else {
+          showToast(`Delete failed: ${result.error}`, 'error')
+        }
+      } catch (err) {
+        showToast(`Delete error: ${err.message}`, 'error')
       }
     }
 
@@ -1227,6 +1265,7 @@
         const result = await res.json()
         if (result.success) {
           showToast(`Hooks written to ${result.displayPath}. Restart Claude Code to activate.`, "success")
+          await loadActiveHooks()
         } else {
           showToast(`Apply failed: ${result.error}`, "error")
         }
@@ -1246,6 +1285,7 @@
         const result = await res.json()
         if (result.success) {
           showToast(`Hooks removed from ${result.displayPath}.`, "success")
+          await loadActiveHooks()
         } else {
           showToast(`Remove failed: ${result.error}`, "error")
         }
