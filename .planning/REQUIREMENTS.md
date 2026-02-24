@@ -96,7 +96,7 @@ Requirements for milestone v1.3: Config UX Polish. Each maps to roadmap phases.
 ### Triggers
 
 - [ ] **TRIG-01**: User can hover over a trigger dropdown to see a tooltip describing when that event fires in Claude Code
-- [ ] **TRIG-02**: Trigger descriptions served via `/api/meta` endpoint for all event types and tool types
+- [x] **TRIG-02**: Trigger descriptions served via `/api/meta` endpoint for all event types and tool types
 
 ### Presets
 
@@ -112,7 +112,7 @@ Requirements for milestone v1.3: Config UX Polish. Each maps to roadmap phases.
 
 ### Playback
 
-- [ ] **PLAY-05**: MP3 sound files play correctly in the browser (MIME type fix for SC2 sounds)
+- [x] **PLAY-05**: MP3 sound files play correctly in the browser (MIME type fix for SC2 sounds)
 
 ## Future Requirements
 
@@ -201,8 +201,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CASC-01 | Phase 11 | Complete |
 | CASC-02 | Phase 11 | Complete |
 | PRST-01 | Phase 12 | Complete |
-| TRIG-02 | Phase 13 | Pending |
-| PLAY-05 | Phase 13 | Pending |
+| TRIG-02 | Phase 13 | Complete |
+| PLAY-05 | Phase 13 | Complete |
 | TRIG-01 | Phase 14 | Pending |
 | EDIT-02 | Phase 14 | Pending |
 | EDIT-03 | Phase 14 | Pending |
