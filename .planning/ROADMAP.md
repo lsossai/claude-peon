@@ -215,7 +215,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 13-01-PLAN.md -- Fix MP3 MIME type in sound serve endpoint and add event/tool descriptions to /api/meta
+- [x] 13-01-PLAN.md -- Fix MP3 MIME type in sound serve endpoint and add event/tool descriptions to /api/meta
 
 ### Phase 14: Trigger Descriptions and Mapping Editor Polish
 **Goal**: Users can see what each trigger event means directly in the mapping card — and the whisper toggle is discoverable without knowing the JSON schema
@@ -226,7 +226,10 @@ Plans:
   2. Hovering over a trigger type selector shows a tooltip with the same event description
   3. Each mapping card header has a visible whisper toggle — toggling it updates the card label immediately without a page reload
   4. The mapping card layout has a clear visual separation between the trigger section and the sound list section
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 14-01-PLAN.md -- Add CSS tooltips and inline descriptions to trigger rows, fix whisper toggle persistence
 
 ### Phase 15: Inline Sound Playback
 **Goal**: Users can audition any sound already assigned to a mapping without opening the sound browser modal
@@ -269,7 +272,7 @@ Phases execute in numeric order: 1 → 2 → ... → 11 → 12 → 13 → 14 →
 | 10. Delete UI | v1.2 | 1/1 | Complete | 2026-02-24 |
 | 11. Peon Cascade | v1.2 | 1/1 | Complete | 2026-02-24 |
 | 12. Bundled Presets | v1.3 | 1/1 | Complete | 2026-02-24 |
-| 13. Server Foundation | 1/1 | Complete    | 2026-02-24 | - |
+| 13. Server Foundation | v1.3 | 1/1 | Complete | 2026-02-24 |
 | 14. Trigger Descriptions and Mapping Editor Polish | v1.3 | 0/1 | Not started | - |
 | 15. Inline Sound Playback | v1.3 | 0/1 | Not started | - |
 | 16. Preset Visual Preview | v1.3 | 0/1 | Not started | - |
