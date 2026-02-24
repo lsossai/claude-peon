@@ -57,17 +57,8 @@ const PEON_EVENTS = [
   "UserPromptSubmit",
 ]
 
-function getSettingsPath(scope) {
-  if (scope === "project") {
-    return resolve(process.cwd(), ".claude", "settings.json")
-  }
-  return resolve(homedir(), ".claude", "settings.json")
-}
-
-function getDisplayPath(scope) {
-  if (scope === "project") return ".claude/settings.json"
-  return "~/.claude/settings.json"
-}
+const GLOBAL_SETTINGS_PATH = resolve(homedir(), ".claude", "settings.json")
+const GLOBAL_DISPLAY_PATH = "~/.claude/settings.json"
 
 function buildPeonGroup(nodePath) {
   return {
@@ -82,8 +73,8 @@ function buildPeonGroup(nodePath) {
   }
 }
 
-function applyHooks(scope = "global", nodePath) {
-  const settingsPath = getSettingsPath(scope)
+function applyHooks(nodePath) {
+  const settingsPath = GLOBAL_SETTINGS_PATH
 
   // 1. Ensure directory exists
   mkdirSync(dirname(settingsPath), { recursive: true })
@@ -118,15 +109,20 @@ function applyHooks(scope = "global", nodePath) {
   const written = JSON.parse(readFileSync(settingsPath, "utf8"))
   if (!written.hooks) throw new Error("Validation failed: hooks key missing after write")
 
-  return { success: true, restartRequired: true, path: settingsPath, displayPath: getDisplayPath(scope) }
+  // 7. Clean up any orphaned peon hooks from project-local settings (best-effort)
+  stripProjectPeonHooks()
+
+  return { success: true, restartRequired: true, path: settingsPath, displayPath: GLOBAL_DISPLAY_PATH }
 }
 
-function removeHooks(scope = "global") {
-  const settingsPath = getSettingsPath(scope)
+function removeHooks() {
+  const settingsPath = GLOBAL_SETTINGS_PATH
 
   // Nothing to remove if the file doesn't exist
   if (!existsSync(settingsPath)) {
-    return { success: true, displayPath: getDisplayPath(scope) }
+    // Still clean up project-local orphans even if global settings don't exist
+    stripProjectPeonHooks()
+    return { success: true, displayPath: GLOBAL_DISPLAY_PATH }
   }
 
   const raw = readFileSync(settingsPath, "utf8")
@@ -134,7 +130,8 @@ function removeHooks(scope = "global") {
 
   // If there's no hooks key (or it's not an object), nothing to strip
   if (!settings.hooks || typeof settings.hooks !== "object") {
-    return { success: true, displayPath: getDisplayPath(scope) }
+    stripProjectPeonHooks()
+    return { success: true, displayPath: GLOBAL_DISPLAY_PATH }
   }
 
   // Strip peon groups from every event key in hooks (not just PEON_EVENTS —
@@ -162,7 +159,53 @@ function removeHooks(scope = "global") {
   // Validate: read back and parse
   JSON.parse(readFileSync(settingsPath, "utf8"))
 
-  return { success: true, displayPath: getDisplayPath(scope) }
+  // Clean up any orphaned peon hooks from project-local settings (best-effort)
+  stripProjectPeonHooks()
+
+  return { success: true, displayPath: GLOBAL_DISPLAY_PATH }
+}
+
+function stripProjectPeonHooks() {
+  try {
+    const projectSettingsPath = resolve(process.cwd(), ".claude", "settings.json")
+
+    // Nothing to clean if the file doesn't exist
+    if (!existsSync(projectSettingsPath)) return
+
+    let settings
+    try {
+      const raw = readFileSync(projectSettingsPath, "utf8")
+      settings = JSON.parse(raw)
+    } catch {
+      // Do not crash on corrupt project settings — best-effort cleanup
+      return
+    }
+
+    // Nothing to strip if there are no hooks
+    if (!settings.hooks || typeof settings.hooks !== "object") return
+
+    // Strip peon groups from every event key in hooks
+    for (const event of Object.keys(settings.hooks)) {
+      if (Array.isArray(settings.hooks[event])) {
+        settings.hooks[event] = settings.hooks[event].filter((g) => !g._claude_peon)
+        if (settings.hooks[event].length === 0) {
+          delete settings.hooks[event]
+        }
+      }
+    }
+
+    // Delete the hooks key entirely if now empty
+    if (Object.keys(settings.hooks).length === 0) {
+      delete settings.hooks
+    }
+
+    // Atomic write: write to .tmp in the same directory, then rename over target
+    const tmpPath = projectSettingsPath + ".tmp"
+    writeFileSync(tmpPath, JSON.stringify(settings, null, 2), "utf8")
+    renameSync(tmpPath, projectSettingsPath)
+  } catch {
+    // Best-effort: silently ignore all errors
+  }
 }
 
 function getMimeType(filePath) {
@@ -336,7 +379,7 @@ function handleApi(req) {
   }
 
   if (path === "/api/apply" && req.method === "POST") {
-    return req.json().then((body) => {
+    return req.json().then(() => {
       const nodePath = Bun.which("node")
       if (!nodePath) {
         return Response.json({
@@ -344,9 +387,8 @@ function handleApi(req) {
           error: "Cannot resolve node binary. Install Node.js and ensure it is on your PATH when starting the UI server.",
         })
       }
-      const scope = body?.scope === "project" ? "project" : "global"
       try {
-        const result = applyHooks(scope, nodePath)
+        const result = applyHooks(nodePath)
         return Response.json(result)
       } catch (error) {
         return Response.json({ success: false, error: error?.message ?? "Unknown error" })
@@ -355,10 +397,9 @@ function handleApi(req) {
   }
 
   if (path === "/api/remove" && req.method === "POST") {
-    return req.json().then((body) => {
-      const scope = body?.scope === "project" ? "project" : "global"
+    return req.json().then(() => {
       try {
-        const result = removeHooks(scope)
+        const result = removeHooks()
         return Response.json(result)
       } catch (error) {
         return Response.json({ success: false, error: error?.message ?? "Unknown error" })
