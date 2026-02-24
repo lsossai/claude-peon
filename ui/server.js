@@ -69,20 +69,20 @@ function getDisplayPath(scope) {
   return "~/.claude/settings.json"
 }
 
-function buildPeonGroup() {
+function buildPeonGroup(nodePath) {
   return {
     _claude_peon: true,
     hooks: [
       {
         type: "command",
-        command: PLAY_JS_PATH,
+        command: `${nodePath} ${PLAY_JS_PATH}`,
         async: true,
       },
     ],
   }
 }
 
-function applyHooks(scope = "global") {
+function applyHooks(scope = "global", nodePath) {
   const settingsPath = getSettingsPath(scope)
 
   // 1. Ensure directory exists
@@ -106,7 +106,7 @@ function applyHooks(scope = "global") {
       settings.hooks[event] = []
     }
     settings.hooks[event] = settings.hooks[event].filter((g) => !g._claude_peon)
-    settings.hooks[event].push(buildPeonGroup())
+    settings.hooks[event].push(buildPeonGroup(nodePath))
   }
 
   // 5. Atomic write: write to .tmp in the same directory, then rename over target
@@ -337,9 +337,16 @@ function handleApi(req) {
 
   if (path === "/api/apply" && req.method === "POST") {
     return req.json().then((body) => {
+      const nodePath = Bun.which("node")
+      if (!nodePath) {
+        return Response.json({
+          success: false,
+          error: "Cannot resolve node binary. Install Node.js and ensure it is on your PATH when starting the UI server.",
+        })
+      }
       const scope = body?.scope === "project" ? "project" : "global"
       try {
-        const result = applyHooks(scope)
+        const result = applyHooks(scope, nodePath)
         return Response.json(result)
       } catch (error) {
         return Response.json({ success: false, error: error?.message ?? "Unknown error" })

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { resolve, dirname } from "path"
 import { fileURLToPath } from "url"
 import { existsSync, readFileSync, appendFileSync } from "fs"
