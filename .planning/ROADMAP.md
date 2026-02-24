@@ -134,7 +134,7 @@ Plans:
 
 **Milestone Goal:** Let users delete any hook directly from the Active Hooks panel — both peon-installed and external hooks — with confirmation, toast feedback, and panel refresh.
 
-- [ ] **Phase 9: Delete API** - Server endpoint and saveConfig() atomicity fix
+- [x] **Phase 9: Delete API** - Server endpoint and saveConfig() atomicity fix (completed 2026-02-24)
 - [ ] **Phase 10: Delete UI** - Delete buttons, confirmation dialog, toast, and panel refresh
 - [ ] **Phase 11: Peon Cascade** - Mapping removal from claude-peon.json and last-mapping auto-strip from settings.json
 
@@ -191,6 +191,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 6. Fix Sound Playback | v1.1 | 1/1 | Complete | 2026-02-24 |
 | 7. Remove Project Scope | v1.1 | 1/1 | Complete | 2026-02-24 |
 | 8. UI Loads Existing Hooks | v1.1 | 1/1 | Complete | 2026-02-24 |
-| 9. Delete API | v1.2 | 0/1 | Not started | - |
+| 9. Delete API | 1/1 | Complete   | 2026-02-24 | - |
 | 10. Delete UI | v1.2 | 0/1 | Not started | - |
 | 11. Peon Cascade | v1.2 | 0/1 | Not started | - |

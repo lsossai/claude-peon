@@ -82,7 +82,7 @@ Requirements for milestone v1.2: Delete Hooks from UI. Each maps to roadmap phas
 
 ### File Safety
 
-- [ ] **SAFE-01**: saveConfig() uses atomic tmp+rename write pattern to prevent claude-peon.json corruption
+- [x] **SAFE-01**: saveConfig() uses atomic tmp+rename write pattern to prevent claude-peon.json corruption
 
 ### Peon Cascade
 
@@ -169,7 +169,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DEL-03 | Phase 10 | Pending |
 | DEL-04 | Phase 10 | Pending |
 | DEL-05 | Phase 10 | Pending |
-| SAFE-01 | Phase 9 | Pending |
+| SAFE-01 | Phase 9 | Complete |
 | CASC-01 | Phase 11 | Pending |
 | CASC-02 | Phase 11 | Pending |
 

@@ -10,12 +10,12 @@ See: .planning/PROJECT.md (updated 2026-02-24)
 ## Current Position
 
 Phase: 9 (Delete API)
-Plan: —
-Status: Not started
-Last activity: 2026-02-24 — Milestone v1.2 roadmap created (Phases 9-11)
+Plan: 1/1 Complete
+Status: Complete
+Last activity: 2026-02-24 — Phase 9 complete: atomic saveConfig() and DELETE /api/hooks endpoint
 
 ```
-Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 □□□]
+Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 ✅□□]
           Phase:  1  2  3  4  5   6  7  8   9 10 11
 ```
 
@@ -40,6 +40,7 @@ Progress: [v1.0 ✅✅✅✅✅][v1.1 ✅✅✅][v1.2 □□□]
 | Phase 06-fix-sound-playback P01 | 1 | 2 tasks | 2 files |
 | Phase 07-remove-project-scope P01 | 1 | 2 tasks | 2 files |
 | Phase 08-ui-loads-existing-hooks P01 | 1 | 2 tasks | 2 files |
+| Phase 09-delete-api P01 | 2 | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -61,6 +62,9 @@ Recent decisions affecting current work:
 - [v1.2 roadmap]: SAFE-01 co-located with Phase 9 (server endpoint) — saveConfig() atomicity fix is a hard prerequisite before any code writes claude-peon.json
 - [v1.2 roadmap]: CASC-01/CASC-02 deferred to Phase 11 — core delete is useful without peon cascade; cascade semantics (Option A auto-strip) resolved during planning
 - [v1.2 roadmap]: Peon deletion deletes the mapping from claude-peon.json (the "peon mapping config"); settings.json peon groups persist until last mapping is gone (CASC-02)
+- [Phase 09-delete-api]: deleteHook() allows deletion of any group by index including peon groups — server agnostic, UI controls what is deletable (Phase 10)
+- [Phase 09-delete-api]: Out-of-bounds groupIndex returns 400 (not 404) — signals bad request body, client should refresh
+- [Phase 09-delete-api]: deleteHook() touches settings.json only — claude-peon.json peon cascade deferred to Phase 11
 
 ### Pending Todos
 
@@ -73,5 +77,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: v1.2 roadmap created. Phase 9 not yet planned.
+Stopped at: Completed 09-delete-api-01-PLAN.md
 Resume file: None
