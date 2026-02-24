@@ -530,6 +530,106 @@
       background: var(--text-muted);
     }
 
+    /* Active Hooks panel */
+    .active-hooks-section {
+      margin-bottom: 32px;
+    }
+
+    .active-hooks-header {
+      margin-bottom: 16px;
+    }
+
+    .active-hooks-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .active-hooks-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .active-hooks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hook-event-row {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+    }
+
+    .hook-event-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .hook-group-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .hook-group-row:first-of-type {
+      border-top: none;
+    }
+
+    .hook-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .hook-badge-peon {
+      background: var(--accent-muted);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .hook-badge-external {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-light);
+    }
+
+    .hook-badge-async {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .hook-command {
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .active-hooks-empty {
+      color: var(--text-muted);
+      font-size: 14px;
+      padding: 12px 0;
+    }
+
     /* Volume slider */
     .volume-control {
       display: flex;
@@ -668,6 +768,14 @@
       </div>
     </section>
 
+    <section id="active-hooks-section" class="active-hooks-section">
+      <div class="active-hooks-header">
+        <h2 class="active-hooks-title">Active Hooks</h2>
+        <div class="active-hooks-subtitle">Currently registered in ~/.claude/settings.json</div>
+      </div>
+      <div id="active-hooks-list" class="active-hooks-list"></div>
+    </section>
+
     <section class="section">
       <div class="section-header">
         <h2 class="section-title">Mappings</h2>
@@ -737,6 +845,49 @@
       meta = await metaRes.json()
       await loadConfig()
       await loadPresets()
+      await loadActiveHooks()
+    }
+
+    async function loadActiveHooks() {
+      const container = document.getElementById("active-hooks-list")
+      try {
+        const res = await fetch("/api/hooks")
+        const data = await res.json()
+        const hooks = data.hooks || {}
+        const eventKeys = Object.keys(hooks)
+
+        if (eventKeys.length === 0) {
+          container.innerHTML = '<div class="active-hooks-empty">No hooks registered</div>'
+          return
+        }
+
+        container.innerHTML = eventKeys.map(eventName => {
+          const groups = hooks[eventName]
+          if (!Array.isArray(groups) || groups.length === 0) return ""
+
+          const groupRows = groups.map(group => {
+            const isPeon = group._claude_peon === true
+            const badgeClass = isPeon ? "hook-badge-peon" : "hook-badge-external"
+            const badgeLabel = isPeon ? "peon" : "external"
+            const cmd = group.hooks && group.hooks[0] ? group.hooks[0].command : ""
+            const isAsync = group.hooks && group.hooks[0] && group.hooks[0].async === true
+            const truncated = cmd.length > 80 ? cmd.slice(0, 80) + "..." : cmd
+            const asyncBadge = isAsync ? '<span class="hook-badge hook-badge-async">async</span>' : ""
+            return `<div class="hook-group-row">
+              <span class="hook-badge ${badgeClass}">${badgeLabel}</span>
+              ${asyncBadge}
+              <span class="hook-command" title="${cmd.replace(/"/g, '&quot;')}">${truncated}</span>
+            </div>`
+          }).join("")
+
+          return `<div class="hook-event-row">
+            <div class="hook-event-name">${eventName}</div>
+            ${groupRows}
+          </div>`
+        }).filter(Boolean).join("")
+      } catch (err) {
+        container.innerHTML = '<div class="active-hooks-empty">Could not load hooks</div>'
+      }
     }
 
     function renderSettings() {
