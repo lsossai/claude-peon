@@ -292,6 +292,7 @@ function getMimeType(filePath) {
     ".css": "text/css",
     ".json": "application/json",
     ".wav": "audio/wav",
+    ".mp3": "audio/mpeg",
     ".png": "image/png",
     ".svg": "image/svg+xml",
   }
@@ -426,7 +427,7 @@ function handleApi(req) {
 
     const file = readFileSync(fullPath)
     return new Response(file, {
-      headers: { "Content-Type": "audio/wav" },
+      headers: { "Content-Type": getMimeType(fullPath) },
     })
   }
 
