@@ -638,13 +638,6 @@
         <button class="btn-secondary" onclick="saveConfig()">Save Config</button>
         <button class="btn-ghost" onclick="loadConfig()">Reload</button>
         <button class="btn-ghost" onclick="showSavePresetModal()">Save Preset</button>
-        <div style="width: 1px; height: 24px; background: var(--border-color); margin: 0 4px;"></div>
-        <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:13px;color:var(--text-secondary);">
-          <input type="radio" name="scope" value="global" checked onchange="updateScope(this.value)"> Global
-        </label>
-        <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:13px;color:var(--text-secondary);">
-          <input type="radio" name="scope" value="project" onchange="updateScope(this.value)"> Project
-        </label>
         <button class="btn-primary" onclick="applyHooks()">Apply</button>
         <button class="btn-ghost" onclick="removeHooks()" style="border-color: var(--danger); color: var(--danger);">Remove</button>
       </div>
@@ -1060,12 +1053,6 @@
       }, 3000)
     }
 
-    let selectedScope = "global"
-
-    function updateScope(value) {
-      selectedScope = value
-    }
-
     async function applyHooks() {
       try {
         // Save config first so apply installs the latest sound mappings
@@ -1077,7 +1064,7 @@
         const res = await fetch("/api/apply", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ scope: selectedScope }),
+          body: JSON.stringify({}),
         })
         const result = await res.json()
         if (result.success) {
@@ -1096,7 +1083,7 @@
         const res = await fetch("/api/remove", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ scope: selectedScope }),
+          body: JSON.stringify({}),
         })
         const result = await res.json()
         if (result.success) {
