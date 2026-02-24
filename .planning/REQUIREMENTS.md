@@ -100,7 +100,7 @@ Requirements for milestone v1.3: Config UX Polish. Each maps to roadmap phases.
 
 ### Presets
 
-- [ ] **PRST-01**: Bundled preset exists for every sound pack in the repo (WC2 Alliance, SC2 Terran/Protoss/Zerg, SC:BW Terran/Protoss/Zerg/Misc)
+- [x] **PRST-01**: Bundled preset exists for every sound pack in the repo (WC2 Alliance, SC2 Terran/Protoss/Zerg, SC:BW Terran/Protoss/Zerg/Misc)
 - [ ] **PRST-02**: User can hover over a preset chip to see a preview showing mapping names, trigger events, and sound counts
 - [ ] **PRST-03**: User is warned about unsaved changes before loading a preset that would overwrite current config
 
@@ -200,7 +200,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SAFE-01 | Phase 9 | Complete |
 | CASC-01 | Phase 11 | Complete |
 | CASC-02 | Phase 11 | Complete |
-| PRST-01 | Phase 12 | Pending |
+| PRST-01 | Phase 12 | Complete |
 | TRIG-02 | Phase 13 | Pending |
 | PLAY-05 | Phase 13 | Pending |
 | TRIG-01 | Phase 14 | Pending |
