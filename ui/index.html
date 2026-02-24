@@ -614,6 +614,12 @@
       border: 1px solid var(--border-color);
     }
 
+    .hook-badge-matcher {
+      background: rgba(130, 170, 255, 0.1);
+      color: #82aaff;
+      border: 1px solid #82aaff;
+    }
+
     .hook-command {
       font-family: 'SF Mono', Monaco, monospace;
       font-size: 12px;
@@ -872,8 +878,10 @@
             const cmd = group.hooks && group.hooks[0] ? group.hooks[0].command : ""
             const isAsync = group.hooks && group.hooks[0] && group.hooks[0].async === true
             const asyncBadge = isAsync ? '<span class="hook-badge hook-badge-async">async</span>' : ""
+            const matcherBadge = group.matcher ? `<span class="hook-badge hook-badge-matcher">${group.matcher}</span>` : ""
             return `<div class="hook-group-row">
               <span class="hook-badge ${badgeClass}">${badgeLabel}</span>
+              ${matcherBadge}
               ${asyncBadge}
               <span class="hook-command">${cmd.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>
             </div>`
