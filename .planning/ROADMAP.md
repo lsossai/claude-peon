@@ -273,6 +273,6 @@ Phases execute in numeric order: 1 → 2 → ... → 11 → 12 → 13 → 14 →
 | 11. Peon Cascade | v1.2 | 1/1 | Complete | 2026-02-24 |
 | 12. Bundled Presets | v1.3 | 1/1 | Complete | 2026-02-24 |
 | 13. Server Foundation | v1.3 | 1/1 | Complete | 2026-02-24 |
-| 14. Trigger Descriptions and Mapping Editor Polish | 1/1 | Complete   | 2026-02-24 | - |
+| 14. Trigger Descriptions and Mapping Editor Polish | 1/1 | Complete    | 2026-02-24 | - |
 | 15. Inline Sound Playback | v1.3 | 0/1 | Not started | - |
 | 16. Preset Visual Preview | v1.3 | 0/1 | Not started | - |
