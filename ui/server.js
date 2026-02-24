@@ -181,6 +181,35 @@ function readGlobalHooks() {
   return { hooks: settings.hooks || {} }
 }
 
+function deleteHook(event, groupIndex) {
+  if (!existsSync(GLOBAL_SETTINGS_PATH)) {
+    return { success: false, error: "settings.json not found" }
+  }
+
+  const raw = readFileSync(GLOBAL_SETTINGS_PATH, "utf8")
+  const settings = JSON.parse(raw) // throws on corrupt JSON — caller handles
+
+  if (!settings.hooks || !Array.isArray(settings.hooks[event])) {
+    return { success: false, error: `No hooks found for event: ${event}` }
+  }
+
+  const arr = settings.hooks[event]
+  if (groupIndex < 0 || groupIndex >= arr.length) {
+    return { success: false, error: `Index ${groupIndex} out of range for event: ${event}` }
+  }
+
+  arr.splice(groupIndex, 1)
+  if (arr.length === 0) delete settings.hooks[event]
+  if (Object.keys(settings.hooks).length === 0) delete settings.hooks
+
+  const tmpPath = GLOBAL_SETTINGS_PATH + ".tmp"
+  writeFileSync(tmpPath, JSON.stringify(settings, null, 2), "utf8")
+  renameSync(tmpPath, GLOBAL_SETTINGS_PATH)
+  JSON.parse(readFileSync(GLOBAL_SETTINGS_PATH, "utf8")) // validate written output
+
+  return { success: true }
+}
+
 function stripProjectPeonHooks() {
   try {
     const projectSettingsPath = resolve(process.cwd(), ".claude", "settings.json")
@@ -430,6 +459,27 @@ function handleApi(req) {
         return Response.json(result)
       } catch (error) {
         return Response.json({ success: false, error: error?.message ?? "Unknown error" })
+      }
+    })
+  }
+
+  if (path === "/api/hooks" && req.method === "DELETE") {
+    return req.json().then((body) => {
+      const { event, groupIndex } = body
+      if (typeof event !== "string" || typeof groupIndex !== "number" || groupIndex < 0) {
+        return Response.json(
+          { success: false, error: "event (string) and groupIndex (number >= 0) are required" },
+          { status: 400 }
+        )
+      }
+      try {
+        const result = deleteHook(event, groupIndex)
+        if (!result.success) {
+          return Response.json(result, { status: 400 })
+        }
+        return Response.json(result)
+      } catch (error) {
+        return Response.json({ success: false, error: error?.message ?? "Unknown error" }, { status: 500 })
       }
     })
   }
