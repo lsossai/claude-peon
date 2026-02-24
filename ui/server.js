@@ -290,7 +290,9 @@ function loadConfig() {
 }
 
 function saveConfig(config) {
-  writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2))
+  const tmpPath = CONFIG_PATH + ".tmp"
+  writeFileSync(tmpPath, JSON.stringify(config, null, 2), "utf8")
+  renameSync(tmpPath, CONFIG_PATH)
 }
 
 function loadPreset(name) {
